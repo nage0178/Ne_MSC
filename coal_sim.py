@@ -20,62 +20,81 @@ def bottleneck(demo, pop, N_start, N_end, t_start, t_end ):
     return
     
 
-def build_bal_topol_sim(N, T_AB, T_ABC, T_DE, T_root, Ne_scenario):
+def build_bal_topol_sim(N, T_AB, T_ABC, T_DE, T_ABCDE, T_root, Ne_scenario):
     demo_bal = msprime.Demography()
     demo_bal.add_population(name = "A", initial_size = N)
     demo_bal.add_population(name = "B", initial_size = N)
     demo_bal.add_population(name = "C", initial_size = N)
     demo_bal.add_population(name = "D", initial_size = N)
     demo_bal.add_population(name = "E", initial_size = N)
+    demo_bal.add_population(name = "O", initial_size = N)
     
-    demo_bal.add_population(name =   "AB", initial_size = N)
-    demo_bal.add_population(name =  "ABC", initial_size = N)
-    demo_bal.add_population(name =   "DE", initial_size = N)
-    demo_bal.add_population(name = "root", initial_size = N)
+    demo_bal.add_population(name =   "AB",  initial_size = N)
+    demo_bal.add_population(name =  "ABC",  initial_size = N)
+    demo_bal.add_population(name =   "DE",  initial_size = N)
+    demo_bal.add_population(name = "ABCDE", initial_size = N)
+    demo_bal.add_population(name = "root",  initial_size = N)
     
-    demo_bal.add_population_split(time =   T_AB, derived=[   "A", "B"], ancestral =   "AB")
-    demo_bal.add_population_split(time =  T_ABC, derived=[  "AB", "C"], ancestral =  "ABC")
-    demo_bal.add_population_split(time =   T_DE, derived=[   "D", "E"], ancestral =   "DE")
-    demo_bal.add_population_split(time = T_root, derived=["ABC", "DE"], ancestral = "root")
-    
+    demo_bal.add_population_split(time =   T_AB,  derived=[   "A",  "B"],  ancestral =    "AB")
+    demo_bal.add_population_split(time =  T_ABC,  derived=[  "AB",  "C"],  ancestral =   "ABC")
+    demo_bal.add_population_split(time =   T_DE,  derived=[   "D",  "E"],  ancestral =    "DE")
+    demo_bal.add_population_split(time = T_ABCDE, derived=["ABC",  "DE"],  ancestral = "ABCDE")
+    demo_bal.add_population_split(time =  T_root, derived=["ABCDE", "O"],  ancestral =  "root")
 
-    # Need to add each possible scenario
-    # Add second event
-    bottleneck(demo_bal, "A", N, N * .01, T_AB * .5, T_AB)
+    # Bottleneck
+    if (Ne_scenario == "s2"):
+        bottleneck(demo_asy,  "A", N, N * .01, T_AB * .5, T_AB)
+        bottleneck(demo_asy, "DE", N, N * .01, (T_DE + T_ABCDE) / 2.0, T_ABCDE)
+
+    # Population decline
+    elif (Ne_scenario == "s3"):
+        bottleneck(demo_asy,  "A", N * 0.01, N, T_AB * .5, T_AB)
+        bottleneck(demo_asy, "DE", N * 0.01, N, (T_DE + T_ABCDE) / 2.0, T_ABCDE)
+
+    # Not implemented in msprime
+    # Either linear or cycles
+    #elif (Ne_scenario == "s4"):
+    #    bottleneck(demo_asy, "A", N, N * .01, T_AB * .5, T_AB)
+
+    # Constant
+    elif (Ne_scenario != "s1"):
+         sys.exit("sim_name not recognized. Check --sim_name option. Options are s1, s2, s3, s4.")
 
     demo_bal.sort_events()
     #print(demo_bal.debug())
 
     return demo_bal
 
-def build_asy_topol_sim(N, T_AB, T_ABC, T_ABCD, T_root, Ne_scenario):
+def build_asy_topol_sim(N, T_AB, T_ABC, T_ABCD, T_ABCDE, T_root, Ne_scenario):
     demo_asy = msprime.Demography()
     demo_asy.add_population(name = "A", initial_size = N)
     demo_asy.add_population(name = "B", initial_size = N)
     demo_asy.add_population(name = "C", initial_size = N)
     demo_asy.add_population(name = "D", initial_size = N)
     demo_asy.add_population(name = "E", initial_size = N)
+    demo_asy.add_population(name = "O", initial_size = N)
     
-    demo_asy.add_population(name =   "AB", initial_size = N)
-    demo_asy.add_population(name =  "ABC", initial_size = N)
-    demo_asy.add_population(name = "ABCD", initial_size = N)
-    demo_asy.add_population(name = "root", initial_size = N)
+    demo_asy.add_population(name =    "AB", initial_size = N)
+    demo_asy.add_population(name =   "ABC", initial_size = N)
+    demo_asy.add_population(name =  "ABCD", initial_size = N)
+    demo_asy.add_population(name = "ABCDE", initial_size = N)
+    demo_asy.add_population(name =  "root", initial_size = N)
     
-    demo_asy.add_population_split(time =   T_AB, derived=[    "A", "B"], ancestral =   "AB")
-    demo_asy.add_population_split(time =  T_ABC, derived=[   "AB", "C"], ancestral =  "ABC")
-    demo_asy.add_population_split(time = T_ABCD, derived=[  "ABC", "D"], ancestral = "ABCD")
-    demo_asy.add_population_split(time = T_root, derived=[ "ABCD", "E"], ancestral = "root")
+    demo_asy.add_population_split(time =    T_AB, derived=[     "A", "B"], ancestral =    "AB")
+    demo_asy.add_population_split(time =   T_ABC, derived=[    "AB", "C"], ancestral =   "ABC")
+    demo_asy.add_population_split(time =  T_ABCD, derived=[   "ABC", "D"], ancestral =  "ABCD")
+    demo_asy.add_population_split(time = T_ABCDE, derived=[  "ABCD", "E"], ancestral = "ABCDE")
+    demo_asy.add_population_split(time =  T_root, derived=[ "ABCDE", "O"], ancestral =  "root")
     
-    # Need to add each possible scenario
-    # Add second event
-
     # Bottleneck
     if (Ne_scenario == "s2"):
-        bottleneck(demo_asy, "A", N, N * .01, T_AB * .5, T_AB)
+        bottleneck(demo_asy,     "A", N, N * .01, T_AB * .5, T_AB)
+        bottleneck(demo_asy, "ABCD",  N, N * .01, (T_ABCD + T_ABCDE) / 2.0, T_ABCDE)
 
     # Population decline
     elif (Ne_scenario == "s3"):
-        bottleneck(demo_asy, "A", N, N * .01, T_AB * .5, T_AB)
+        bottleneck(demo_asy,     "A", N * 0.01, N, T_AB * .5, T_AB)
+        bottleneck(demo_asy, "ABCD",  N * 0.01, N, (T_ABCD + T_ABCDE) / 2.0, T_ABCDE)
 
     # Not implemented in msprime
     # Either linear or cycles
@@ -102,42 +121,46 @@ def build_demography(topology, infer, theta, Ne_scenario):
     if (topology == "B"):
         if (infer == "topology"): 
             # Balanced topology inference parameters
-            T_AB   = 4.7 * theta / mu_y 
-            T_ABC  = 4.8 * theta / mu_y 
-            T_DE   = 4.8 * theta / mu_y 
-            T_root = 5.0 * theta / mu_y 
+            T_AB    = 4.7 * theta / mu_y 
+            T_ABC   = 4.8 * theta / mu_y 
+            T_DE    = 4.8 * theta / mu_y 
+            T_ABCDE = 5.0 * theta / mu_y 
+            T_root  = 7.5 * theta / mu_y 
 
         elif (infer == "time"): 
             # Balanced divergence time inference parameters
-            T_AB   = 3.0 * theta / mu_y 
-            T_ABC  = 4.0 * theta / mu_y 
-            T_DE   = 4.5 * theta / mu_y 
-            T_root = 5.0 * theta / mu_y 
+            T_AB    = 3.0 * theta / mu_y 
+            T_ABC   = 4.0 * theta / mu_y 
+            T_DE    = 4.5 * theta / mu_y 
+            T_ABCDE = 5.0 * theta / mu_y 
+            T_root  = 7.5 * theta / mu_y 
 
         else: 
             sys.exit("Infer not recognized. Check --infer option")
 
-        demo = build_bal_topol_sim(N, T_AB, T_ABC, T_DE, T_root, Ne_scenario)
+        demo = build_bal_topol_sim(N, T_AB, T_ABC, T_DE, T_ABCDE, T_root, Ne_scenario)
 
     elif (topology == "U"):
         if (infer == "topology"): 
             # Unbalanced (asymmetric) topology inference parameters
-            T_AB   = 4.4 * theta / mu_y 
-            T_ABC  = 4.6 * theta / mu_y 
-            T_ABCD = 4.8 * theta / mu_y 
-            T_root = 5.0 * theta / mu_y 
+            T_AB    = 4.4 * theta / mu_y 
+            T_ABC   = 4.6 * theta / mu_y 
+            T_ABCD  = 4.8 * theta / mu_y 
+            T_ABCDE = 5.0 * theta / mu_y 
+            T_root  = 7.5 * theta / mu_y 
 
         elif (infer == "time"): 
             # Unbalanced (asymmetric) divergence time inference parameters
-            T_AB   = 2.5 * theta / mu_y 
-            T_ABC  = 3.0 * theta / mu_y 
-            T_ABCD = 4.0 * theta / mu_y 
-            T_root = 5.0 * theta / mu_y 
+            T_AB    = 2.5 * theta / mu_y 
+            T_ABC   = 3.0 * theta / mu_y 
+            T_ABCD  = 4.0 * theta / mu_y 
+            T_ABCDE = 5.0 * theta / mu_y 
+            T_root  = 7.5 * theta / mu_y 
 
         else: 
             sys.exit("Infer not recognized. Check --infer option")
 
-        demo = build_asy_topol_sim(N, T_AB, T_ABC, T_ABCD, T_root, Ne_scenario)
+        demo = build_asy_topol_sim(N, T_AB, T_ABC, T_ABCD, T_ABCDE, T_root, Ne_scenario)
 
     else:
         sys.exit("Topology not recognized. Check --topology option")
@@ -177,6 +200,7 @@ if __name__ == "__main__":
     seed      = args.seed
 
     samples = [
+        msprime.SampleSet(        1, population="O", time=0, ploidy=1),
         msprime.SampleSet(n_samples, population="A", time=0, ploidy=1),
         msprime.SampleSet(n_samples, population="B", time=0, ploidy=1),
         msprime.SampleSet(n_samples, population="C", time=0, ploidy=1),
