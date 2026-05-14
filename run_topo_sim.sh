@@ -1,29 +1,23 @@
-mkdir -p {time,topology}/{t_U,t_B}/{s1,s2,s3,s4}/l{40,160}_s{1,8}/theta{0.01,0.0025}/rep{1..50}/{trees,fasta}
+mkdir -p {time,topology}/{t_U,t_B}/{s1,s2,s3}/l{40,160}_s{1,8}/theta{0.01,0.0025}/rep{1..50}/{trees,fasta}
 
 #source venv/bin/activate
 
-#sim_name=s1
-#loci=160
-#samples=8
-#topology=U
-#theta=0.01
 seed=1
 
-infer=topology
 for infer in time topology
 do
-	for topology in U #B
+	for topology in U B
 	do 
-		for sim_name in s1 s2 s3 #s4
+		for sim_name in s1 s2 s3 
 		do
 			
 			for loci in 40 160 
 			do
-				for samples in 1 #8 
+				for samples in 1 8 
 				do
-					for theta in 0.01 #0.0025
+					for theta in 0.01 0.0025
 					do 
-						for rep in {1..5}
+						for rep in {1..50}
 						do
 	
 							dir=$infer/t_$topology/$sim_name/l${loci}_s$samples/theta$theta/rep$rep
@@ -51,9 +45,9 @@ do
 	
 		for ((i=1;i<=loci; i++))
 		do
-			if [ -f tree/l${i}.tree ] 
+			if [ -f $dir/trees/l${i}.tre ] 
 			then
-				seq-gen -mHKY -s0.00000001 -z $seq_seed < trees/l${i}.tre > $dir/fasta/l${i}.fa  & 
+				seq-gen -mHKY -s0.00000001 -z $seq_seed < $dir/trees/l${i}.tre > $dir/fasta/l${i}.fa  & 
 			fi
 			((seq_seed=seq_seed+1))
 		done
