@@ -61,13 +61,13 @@ def build_bal_topol_sim(N, T_AB, T_ABC, T_DE, T_ABCDE, T_root, Ne_scenario, Ne_s
     demo_bal.add_population_split(time = T_ABCDE, derived=["ABC",  "DE"],  ancestral = "ABCDE")
     demo_bal.add_population_split(time =  T_root, derived=["ABCDE", "O"],  ancestral =  "root")
 
-    if (Ne_size == "i")
+    if (Ne_size == "i") :
         bottle_ratio = 100
         piecewise_ratio = 10
-    elif (Ne_size == "d")
+    elif (Ne_size == "d") :
         bottle_ratio = 0.01
         piecewise_ratio = 0.1
-    else 
+    else :  
         sys.exit("Ne_size not recognized. Check --Ne_size option. Options are i (increase) and d (decrease).")
 
     # Bottleneck
@@ -78,7 +78,7 @@ def build_bal_topol_sim(N, T_AB, T_ABC, T_DE, T_ABCDE, T_root, Ne_scenario, Ne_s
     # Population decline
     elif (Ne_scenario == "s3"):
         # Reduction by order of magnitude in pop size
-        piecewise_const(demo_bal,  "A", N * piecewise_ratio, N,  T_A,  T_AB)
+        piecewise_const(demo_bal,  "A", N * piecewise_ratio, N,  0,  T_AB)
         piecewise_const(demo_bal, "DE", N * piecewise_ratio, N, T_DE,  T_ABCDE)
         #bottleneck(demo_asy, "DE", N * 0.01, N, (T_DE + T_ABCDE) / 2.0, T_ABCDE)
         #bottleneck(demo_asy,  "A", N * 0.01, N, T_AB * .5, T_AB)
@@ -118,13 +118,13 @@ def build_asy_topol_sim(N, T_AB, T_ABC, T_ABCD, T_ABCDE, T_root, Ne_scenario, Ne
     demo_asy.add_population_split(time = T_ABCDE, derived=[  "ABCD", "E"], ancestral = "ABCDE")
     demo_asy.add_population_split(time =  T_root, derived=[ "ABCDE", "O"], ancestral =  "root")
 
-    if (Ne_size == "i")
+    if (Ne_size == "i") :
         bottle_ratio = 100
         piecewise_ratio = 10
-    elif (Ne_size == "d")
+    elif (Ne_size == "d") :
         bottle_ratio = 0.01
         piecewise_ratio = 0.1
-    else 
+    else :
         sys.exit("Ne_size not recognized. Check --Ne_size option. Options are i (increase) and d (decrease).")
     
     # Bottleneck
@@ -136,8 +136,8 @@ def build_asy_topol_sim(N, T_AB, T_ABC, T_ABCD, T_ABCDE, T_root, Ne_scenario, Ne
     elif (Ne_scenario == "s3"):
         #bottleneck(demo_asy,     "A", N * 0.01, N, T_AB * .5, T_AB)
         #bottleneck(demo_asy, "ABCD",  N * 0.01, N, (T_ABCD + T_ABCDE) / 2.0, T_ABCDE)
-        piecewise_const(demo_asy,    "A", N * piecewise_ratio, N,  T_A,  T_AB)
-        piecewise_const(demo_asy, "ABCD", N * piecewise_ratio, N, T_DE,  T_ABCDE)
+        piecewise_const(demo_asy,    "A", N * piecewise_ratio, N,  0,  T_AB)
+        piecewise_const(demo_asy, "ABCD", N * piecewise_ratio, N, T_ABCD,  T_ABCDE)
 
     # Not implemented in msprime
     # Either linear or cycles
