@@ -19,8 +19,28 @@ def bottleneck(demo, pop, N_start, N_end, t_start, t_end ):
 
     return
     
+# The middle third of the branch is population different size
+def piecewise_const(demo, pop, N_middle, N_ends, t_start, t_end ):
 
-def build_bal_topol_sim(N, T_AB, T_ABC, T_DE, T_ABCDE, T_root, Ne_scenario):
+    time_length = t_end - t_start 
+
+    demo.add_population_parameters_change (
+        time=t_start + (time_length / 3),
+        initial_size=N_middle,
+        growth_rate=0,
+        population=pop
+    )
+
+    demo.add_population_parameters_change (
+        time=t_start + (time_length * 2 / 3),
+        initial_size=N_middle,
+        growth_rate=0,
+        population=pop
+    )
+
+    return
+
+def build_bal_topol_sim(N, T_AB, T_ABC, T_DE, T_ABCDE, T_root, Ne_scenario, Ne_size):
     demo_bal = msprime.Demography()
     demo_bal.add_population(name = "A", initial_size = N)
     demo_bal.add_population(name = "B", initial_size = N)
@@ -41,15 +61,27 @@ def build_bal_topol_sim(N, T_AB, T_ABC, T_DE, T_ABCDE, T_root, Ne_scenario):
     demo_bal.add_population_split(time = T_ABCDE, derived=["ABC",  "DE"],  ancestral = "ABCDE")
     demo_bal.add_population_split(time =  T_root, derived=["ABCDE", "O"],  ancestral =  "root")
 
+    if (Ne_size == "i")
+        bottle_ratio = 100
+        piecewise_ratio = 10
+    elif (Ne_size == "d")
+        bottle_ratio = 0.01
+        piecewise_ratio = 0.1
+    else 
+        sys.exit("Ne_size not recognized. Check --Ne_size option. Options are i (increase) and d (decrease).")
+
     # Bottleneck
     if (Ne_scenario == "s2"):
-        bottleneck(demo_asy,  "A", N, N * .01, T_AB * .5, T_AB)
-        bottleneck(demo_asy, "DE", N, N * .01, (T_DE + T_ABCDE) / 2.0, T_ABCDE)
+        bottleneck(demo_bal,  "A", N, N * bottle_ratio, T_AB * .5, T_AB)
+        bottleneck(demo_bal, "DE", N, N * bottle_ratio, (T_DE + T_ABCDE) / 2.0, T_ABCDE)
 
     # Population decline
     elif (Ne_scenario == "s3"):
-        bottleneck(demo_asy,  "A", N * 0.01, N, T_AB * .5, T_AB)
-        bottleneck(demo_asy, "DE", N * 0.01, N, (T_DE + T_ABCDE) / 2.0, T_ABCDE)
+        # Reduction by order of magnitude in pop size
+        piecewise_const(demo_bal,  "A", N * piecewise_ratio, N,  T_A,  T_AB)
+        piecewise_const(demo_bal, "DE", N * piecewise_ratio, N, T_DE,  T_ABCDE)
+        #bottleneck(demo_asy, "DE", N * 0.01, N, (T_DE + T_ABCDE) / 2.0, T_ABCDE)
+        #bottleneck(demo_asy,  "A", N * 0.01, N, T_AB * .5, T_AB)
 
     # Not implemented in msprime
     # Either linear or cycles
@@ -58,14 +90,14 @@ def build_bal_topol_sim(N, T_AB, T_ABC, T_DE, T_ABCDE, T_root, Ne_scenario):
 
     # Constant
     elif (Ne_scenario != "s1"):
-         sys.exit("sim_name not recognized. Check --sim_name option. Options are s1, s2, s3, s4.")
+         sys.exit("sim_name not recognized. Check --sim_name option. Options are s1, s2, s3.")
 
     demo_bal.sort_events()
     #print(demo_bal.debug())
 
     return demo_bal
 
-def build_asy_topol_sim(N, T_AB, T_ABC, T_ABCD, T_ABCDE, T_root, Ne_scenario):
+def build_asy_topol_sim(N, T_AB, T_ABC, T_ABCD, T_ABCDE, T_root, Ne_scenario, Ne_size):
     demo_asy = msprime.Demography()
     demo_asy.add_population(name = "A", initial_size = N)
     demo_asy.add_population(name = "B", initial_size = N)
@@ -85,16 +117,27 @@ def build_asy_topol_sim(N, T_AB, T_ABC, T_ABCD, T_ABCDE, T_root, Ne_scenario):
     demo_asy.add_population_split(time =  T_ABCD, derived=[   "ABC", "D"], ancestral =  "ABCD")
     demo_asy.add_population_split(time = T_ABCDE, derived=[  "ABCD", "E"], ancestral = "ABCDE")
     demo_asy.add_population_split(time =  T_root, derived=[ "ABCDE", "O"], ancestral =  "root")
+
+    if (Ne_size == "i")
+        bottle_ratio = 100
+        piecewise_ratio = 10
+    elif (Ne_size == "d")
+        bottle_ratio = 0.01
+        piecewise_ratio = 0.1
+    else 
+        sys.exit("Ne_size not recognized. Check --Ne_size option. Options are i (increase) and d (decrease).")
     
     # Bottleneck
     if (Ne_scenario == "s2"):
-        bottleneck(demo_asy,     "A", N, N * .01, T_AB * .5, T_AB)
-        bottleneck(demo_asy, "ABCD",  N, N * .01, (T_ABCD + T_ABCDE) / 2.0, T_ABCDE)
+        bottleneck(demo_asy,     "A", N, N * bottle_ratio, T_AB * .5, T_AB)
+        bottleneck(demo_asy, "ABCD",  N, N * bottle_ratio, (T_ABCD + T_ABCDE) / 2.0, T_ABCDE)
 
-    # Population decline
+    # Piecewise constant
     elif (Ne_scenario == "s3"):
-        bottleneck(demo_asy,     "A", N * 0.01, N, T_AB * .5, T_AB)
-        bottleneck(demo_asy, "ABCD",  N * 0.01, N, (T_ABCD + T_ABCDE) / 2.0, T_ABCDE)
+        #bottleneck(demo_asy,     "A", N * 0.01, N, T_AB * .5, T_AB)
+        #bottleneck(demo_asy, "ABCD",  N * 0.01, N, (T_ABCD + T_ABCDE) / 2.0, T_ABCDE)
+        piecewise_const(demo_asy,    "A", N * piecewise_ratio, N,  T_A,  T_AB)
+        piecewise_const(demo_asy, "ABCD", N * piecewise_ratio, N, T_DE,  T_ABCDE)
 
     # Not implemented in msprime
     # Either linear or cycles
@@ -103,14 +146,14 @@ def build_asy_topol_sim(N, T_AB, T_ABC, T_ABCD, T_ABCDE, T_root, Ne_scenario):
 
     # Constant
     elif (Ne_scenario != "s1"):
-         sys.exit("sim_name not recognized. Check --sim_name option. Options are s1, s2, s3, s4.")
+         sys.exit("sim_name not recognized. Check --sim_name option. Options are s1, s2, s3.")
 
     demo_asy.sort_events()
     #print(demo_asy.debug())
 
     return demo_asy
 
-def build_demography(topology, infer, theta, Ne_scenario): 
+def build_demography(topology, infer, theta, Ne_scenario, Ne_size): 
 
     # MSC parameters
     #theta  = 0.01
@@ -138,7 +181,7 @@ def build_demography(topology, infer, theta, Ne_scenario):
         else: 
             sys.exit("Infer not recognized. Check --infer option")
 
-        demo = build_bal_topol_sim(N, T_AB, T_ABC, T_DE, T_ABCDE, T_root, Ne_scenario)
+        demo = build_bal_topol_sim(N, T_AB, T_ABC, T_DE, T_ABCDE, T_root, Ne_scenario, Ne_size)
 
     elif (topology == "U"):
         if (infer == "topology"): 
@@ -160,7 +203,7 @@ def build_demography(topology, infer, theta, Ne_scenario):
         else: 
             sys.exit("Infer not recognized. Check --infer option")
 
-        demo = build_asy_topol_sim(N, T_AB, T_ABC, T_ABCD, T_ABCDE, T_root, Ne_scenario)
+        demo = build_asy_topol_sim(N, T_AB, T_ABC, T_ABCD, T_ABCDE, T_root, Ne_scenario, Ne_size)
 
     else:
         sys.exit("Topology not recognized. Check --topology option")
@@ -185,6 +228,7 @@ if __name__ == "__main__":
     parser.add_argument("--loci",     type=int,   help="Number of loci")
     parser.add_argument("--samples",  type=int,   help="Number of number of samples")
     parser.add_argument("--theta",    type=float, help="theta")
+    parser.add_argument("--Ne_size",  type=str,   help="i (increase) or d (decrease) Ne")
     parser.add_argument("--out_dir",  type=str,   help="Output directory")
     parser.add_argument("--seed",     type=int,   help="seed")
 
@@ -196,6 +240,7 @@ if __name__ == "__main__":
     n_samples = args.samples
     theta     = args.theta
     loci      = args.loci
+    Ne_size   = args.Ne_size
     out_dir   = args.out_dir
     seed      = args.seed
 
@@ -208,7 +253,7 @@ if __name__ == "__main__":
         msprime.SampleSet(n_samples, population="E", time=0, ploidy=1),
     ]
     
-    demo = build_demography(topology, infer, theta, sim_name) 
+    demo = build_demography(topology, infer, theta, sim_name, Ne_size) 
     
     replicates = msprime.sim_ancestry(
             samples=samples,
