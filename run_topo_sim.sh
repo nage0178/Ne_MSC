@@ -1,6 +1,6 @@
 mkdir -p {time,topology}/{t_U,t_B}/{s1,s2,s3}/l{40,160}_s{1,8}/theta{0.01,0.0025}/Ne_{i,d}/rep{1..50}/{trees,fasta}
 
-#source venv/bin/activate
+source venv/bin/activate
 
 seed=1
 
@@ -50,7 +50,7 @@ do
 		do
 			if [ -f $dir/trees/l${i}.tre ] 
 			then
-				seq-gen -mHKY -s0.00000001 -z $seq_seed < $dir/trees/l${i}.tre > $dir/fasta/l${i}.fa  & 
+				seq-gen -mHKY -l 500 -s0.00000001 -z $seq_seed < $dir/trees/l${i}.tre > $dir/fasta/l${i}.fa  & 
 			fi
 			((seq_seed=seq_seed+1))
 		done
