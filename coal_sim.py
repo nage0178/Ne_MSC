@@ -6,7 +6,15 @@ import sys
 
 # Should be able to use the same as exponential decline
 # Thinking backward in time, start is close to time present
-def bottleneck(demo, pop, N_start, N_end, t_start, t_end ):
+def bottleneck(demo, pop, N_1, N_2, t_start, t_end ):
+    
+    if (N_1 < N_2):
+        N_start = N_1
+        N_end = N_2
+    else:
+        N_start = N_2
+        N_end = N_1
+
 
     growth_rate = np.log(N_end / N_start) / -(t_end - t_start)
 
@@ -158,25 +166,28 @@ def build_demography(topology, infer, theta, Ne_scenario, Ne_size):
     # MSC parameters
     #theta  = 0.01
     mu_g = pow(10, -8)
-    mu_y = pow(10, -9)
+    #mu_y = pow(10, -9)
     N = theta / (4 * mu_g) 
 
     if (topology == "B"):
         if (infer == "topology"): 
             # Balanced topology inference parameters
-            T_AB    = 4.7 * theta / mu_y 
-            T_ABC   = 4.8 * theta / mu_y 
-            T_DE    = 4.8 * theta / mu_y 
-            T_ABCDE = 5.0 * theta / mu_y 
-            T_root  = 7.5 * theta / mu_y 
+            # The time's Ziheng's papers use are 4.7 * theta
+            # To convert to generation, we divide by the per 
+            # GENERATION mutation rate, not per year
+            T_AB    = 4.7 * theta / mu_g 
+            T_ABC   = 4.8 * theta / mu_g 
+            T_DE    = 4.8 * theta / mu_g 
+            T_ABCDE = 5.0 * theta / mu_g 
+            T_root  = 7.5 * theta / mu_g 
 
         elif (infer == "time"): 
             # Balanced divergence time inference parameters
-            T_AB    = 3.0 * theta / mu_y 
-            T_ABC   = 4.0 * theta / mu_y 
-            T_DE    = 4.5 * theta / mu_y 
-            T_ABCDE = 5.0 * theta / mu_y 
-            T_root  = 7.5 * theta / mu_y 
+            T_AB    = 3.0 * theta / mu_g 
+            T_ABC   = 4.0 * theta / mu_g 
+            T_DE    = 4.5 * theta / mu_g 
+            T_ABCDE = 5.0 * theta / mu_g 
+            T_root  = 7.5 * theta / mu_g 
 
         else: 
             sys.exit("Infer not recognized. Check --infer option")
@@ -186,19 +197,19 @@ def build_demography(topology, infer, theta, Ne_scenario, Ne_size):
     elif (topology == "U"):
         if (infer == "topology"): 
             # Unbalanced (asymmetric) topology inference parameters
-            T_AB    = 4.4 * theta / mu_y 
-            T_ABC   = 4.6 * theta / mu_y 
-            T_ABCD  = 4.8 * theta / mu_y 
-            T_ABCDE = 5.0 * theta / mu_y 
-            T_root  = 7.5 * theta / mu_y 
+            T_AB    = 4.4 * theta / mu_g 
+            T_ABC   = 4.6 * theta / mu_g 
+            T_ABCD  = 4.8 * theta / mu_g 
+            T_ABCDE = 5.0 * theta / mu_g 
+            T_root  = 7.5 * theta / mu_g 
 
         elif (infer == "time"): 
             # Unbalanced (asymmetric) divergence time inference parameters
-            T_AB    = 2.5 * theta / mu_y 
-            T_ABC   = 3.0 * theta / mu_y 
-            T_ABCD  = 4.0 * theta / mu_y 
-            T_ABCDE = 5.0 * theta / mu_y 
-            T_root  = 7.5 * theta / mu_y 
+            T_AB    = 2.5 * theta / mu_g 
+            T_ABC   = 3.0 * theta / mu_g 
+            T_ABCD  = 4.0 * theta / mu_g 
+            T_ABCDE = 5.0 * theta / mu_g 
+            T_root  = 7.5 * theta / mu_g 
 
         else: 
             sys.exit("Infer not recognized. Check --infer option")
