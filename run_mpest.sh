@@ -1,7 +1,7 @@
 seed=1
 for loci in 40 160
 do
-	for dir in topology/{t_U,t_B}/{s1,s2,s3}/l${loci}_s1/theta{0.01,0.0025}/Ne_{i,d}/rep{1..20}
+	for dir in topology/{t_U,t_B}/{s1,s2,s3}/l${loci}_s1/theta{0.01,0.0025}/Ne_{i,d}/rep{1..50}
 	do
 
 		# Need to generate nexus files
@@ -17,7 +17,7 @@ done
 
 for loci in 40 160
 do
-	for rep in {1..20} 
+	for rep in {1..50} 
 	do
 	        for dir in topology/{t_U,t_B}/{s1,s2,s3}/l${loci}_s1/theta{0.01,0.0025}/Ne_{i,d}/rep$rep
 		do
