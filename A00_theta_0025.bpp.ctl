@@ -33,6 +33,6 @@ finetune = 1
 
 # MCMC samples, locusrate, heredityscalars, Genetrees
 print = 1 0 0 0   * 
-burnin = 10000
+burnin = 5000
 sampfreq = 2
 nsample = 25000
