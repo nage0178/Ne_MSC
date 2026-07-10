@@ -88,13 +88,6 @@ def build_bal_topol_sim(N, T_AB, T_ABC, T_DE, T_ABCDE, T_root, Ne_scenario, Ne_s
         # Reduction by order of magnitude in pop size
         piecewise_const(demo_bal,  "A", N * piecewise_ratio, N,  0,  T_AB)
         piecewise_const(demo_bal, "DE", N * piecewise_ratio, N, T_DE,  T_ABCDE)
-        #bottleneck(demo_asy, "DE", N * 0.01, N, (T_DE + T_ABCDE) / 2.0, T_ABCDE)
-        #bottleneck(demo_asy,  "A", N * 0.01, N, T_AB * .5, T_AB)
-
-    # Not implemented in msprime
-    # Either linear or cycles
-    #elif (Ne_scenario == "s4"):
-    #    bottleneck(demo_asy, "A", N, N * .01, T_AB * .5, T_AB)
 
     # Constant
     elif (Ne_scenario != "s1"):
@@ -142,15 +135,8 @@ def build_asy_topol_sim(N, T_AB, T_ABC, T_ABCD, T_ABCDE, T_root, Ne_scenario, Ne
 
     # Piecewise constant
     elif (Ne_scenario == "s3"):
-        #bottleneck(demo_asy,     "A", N * 0.01, N, T_AB * .5, T_AB)
-        #bottleneck(demo_asy, "ABCD",  N * 0.01, N, (T_ABCD + T_ABCDE) / 2.0, T_ABCDE)
         piecewise_const(demo_asy,    "A", N * piecewise_ratio, N,  0,  T_AB)
         piecewise_const(demo_asy, "ABCD", N * piecewise_ratio, N, T_ABCD,  T_ABCDE)
-
-    # Not implemented in msprime
-    # Either linear or cycles
-    #elif (Ne_scenario == "s4"):
-    #    bottleneck(demo_asy, "A", N, N * .01, T_AB * .5, T_AB)
 
     # Constant
     elif (Ne_scenario != "s1"):
