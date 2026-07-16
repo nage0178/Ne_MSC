@@ -37,7 +37,7 @@ then
 	paste -d "" $dir/tmp_{1..40} | tail -n+2  | grep -v n0 >> $dir/data.phy
 	cp settings_1_$analysis $dir/settings
 
-elif [[ "$loci" == 160 && "$s" == 1 ]]
+elif [[ "$loci" == 160 && "$s" == 8 ]]
 then
 	echo 40 80000 > $dir/data.phy
 	paste -d "" $dir/tmp_{1..40} | tail -n+2  | grep -v n0 >> $dir/data.phy
