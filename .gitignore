@@ -1,0 +1,12 @@
+out*
+topology/
+time/
+bppTimeOutput/
+test_bpp/
+*csv
+dirList
+
+bpp_tree.txt
+list_tree.txt
+*_list_gtree.txt
+*_gtree_dist.csv
