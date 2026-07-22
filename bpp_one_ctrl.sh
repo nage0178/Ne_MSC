@@ -49,7 +49,6 @@ then
 	
 	sed -i 's/1  1  1  1  1/8  8  8  8  8/' $dir/bpp/1/bpp.ctl
 	sed -i 's/1_imap.txt/8_imap.txt/' $dir/bpp/1/bpp.ctl
-	sed -i 's/nsample = 25000/nsample = 40000/' $dir/bpp/1/bpp.ctl
 	cp 8_imap.txt $dir/bpp/
 else
 
