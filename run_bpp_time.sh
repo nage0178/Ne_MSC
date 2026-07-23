@@ -4,7 +4,7 @@ echo time/{t_U,t_B}/s1/l{40,160}_s{1,8}/theta{0.01,0.0025}/Ne_i >> dirList
 
 for rep in {1..50} 
 do
-	./run_bpp_one_thread.sh $rep &>  bppTimeOutput/thread${rep} & 
+	./run_bpp_one_thread.sh $rep dirList out.FigTree.tre &>  bppTimeOutput/thread${rep} & 
 
 
 done
