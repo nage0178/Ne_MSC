@@ -26,7 +26,7 @@ nloci = 40
 # do not remove sites with ambiguity data
 cleandata = 0
 
-thetaprior = gamma 1.5 600 # gamma(a, b) for theta (estimate theta)
+thetaprior = gamma 2 800 # gamma(a, b) for theta (estimate theta)
 tauprior = gamma 2.5 200 # gamma(a, b) for root tau & Dirichlet(a) for other tau's
 
 # auto-tune step lengths during burnin (key:val pairs may be appended)
@@ -34,6 +34,7 @@ finetune = 1
 
 # MCMC samples, locusrate, heredityscalars, Genetrees
 print = 1 0 0 0   * 
-burnin = 5000
-sampfreq = 2
-nsample = 40000
+burnin = 20000
+sampfreq = 4
+nsample = 50000
+checkpoint = 10000
