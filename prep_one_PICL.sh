@@ -6,8 +6,11 @@ analysis=$4
 tree=$5
 
 i=1
+# Adds tab after sequence name 
 sed -E 's/([0-9])$/\1\t/' $dir/fasta/l${i}.fa > $dir/tmp_${i}
+# Removes new line
 tr -d '\n' < $dir/tmp_${i} > $dir/tmp2_${i}
+# Replaces > with newline and sorts
 sed -E 's/>/\n/g' $dir/tmp2_${i} | sort  > $dir/tmp_${i}
 
 
@@ -23,34 +26,34 @@ if [[ "$loci" == 40 && "$s" == 1 ]]
 then
 	echo 5 20000 > $dir/data.phy
 	paste -d "" $dir/tmp_{1..40} | tail -n+2  | grep -v n0 >> $dir/data.phy
-	cp settings_1_$analysis $dir/settings
+	cp picl_files/settings_1_$analysis $dir/settings
 
 elif [[ "$loci" == 40 && "$s" == 8 ]]
 then
 	echo 40 20000 > $dir/data.phy
 	paste -d "" $dir/tmp_{1..40} | tail -n+2  | grep -v n0 >> $dir/data.phy
-	cp settings_8_$analysis $dir/settings
+	cp picl_files/settings_8_$analysis $dir/settings
 
 elif [[ "$loci" == 160 && "$s" == 1 ]]
 then
 	echo 5 80000 > $dir/data.phy
-	paste -d "" $dir/tmp_{1..40} | tail -n+2  | grep -v n0 >> $dir/data.phy
-	cp settings_1_$analysis $dir/settings
+	paste -d "" $dir/tmp_{1..160} | tail -n+2  | grep -v n0 >> $dir/data.phy
+	cp picl_files/settings_1_$analysis $dir/settings
 
 elif [[ "$loci" == 160 && "$s" == 8 ]]
 then
 	echo 40 80000 > $dir/data.phy
-	paste -d "" $dir/tmp_{1..40} | tail -n+2  | grep -v n0 >> $dir/data.phy
-	cp settings_8_$analysis $dir/settings
+	paste -d "" $dir/tmp_{1..160} | tail -n+2  | grep -v n0 >> $dir/data.phy
+	cp picl_files/settings_8_$analysis $dir/settings
 fi
 
 if [[ "$analysis" == time ]]
 then
 	if [[ "$tree" == t_B ]]
 	then
-		cp balanced_picl.tre $dir/treefile.tre
+		cp picl_files/sbalanced_picl.tre $dir/treefile.tre
 	else
-		cp unbalanced_picl.tre $dir/treefile.tre
+		cp picl_files/sunbalanced_picl.tre $dir/treefile.tre
 	fi
 
 fi
