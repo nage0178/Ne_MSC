@@ -29,8 +29,8 @@ input_trees <- input_trees[, 1]
 unbalanced <- grepl("t_U", input_trees)
 
 # Read in true tree
-t_trueU <- read.tree("unbalanced.tre")
-t_trueB <- read.tree("balanced.tre")
+t_trueU <- read.tree("trees/unbalanced.tre")
+t_trueB <- read.tree("trees/balanced.tre")
 
 dist <- rep(NA, length(input_trees))
 

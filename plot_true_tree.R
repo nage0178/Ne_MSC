@@ -1,11 +1,11 @@
 library(ape)
 setwd("~/Ne_MSC")
 
-topo_unbalanced  <- read.tree("true_balanced_topo.tre")
-topo_balanced    <- read.tree("true_unbalanced_topo.tre")
+topo_unbalanced  <- read.tree("trees/true_balanced_topo.tre")
+topo_balanced    <- read.tree("trees/true_unbalanced_topo.tre")
 
-time_unbalanced  <- read.tree("true_balanced_time.tre")
-time_balanced    <- read.tree("true_unbalanced_time.tre")
+time_unbalanced  <- read.tree("trees/true_balanced_time.tre")
+time_balanced    <- read.tree("trees/true_unbalanced_time.tre")
 b_width <- 3
 width_balance <- c(1, b_width, 1, 1, b_width, 1, 1, 1, 1, 1)
 width_unbalance <- c(1, 1, 1, b_width, 1, 1, b_width, 1, 1, 1)
