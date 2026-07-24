@@ -19,19 +19,19 @@ if [[ $analysis == "time" ]]
 then
 	if [[ $theta == "0.01" ]] 
 	then
-		cp A00_theta_01.bpp.ctl $dir/bpp/1/bpp.ctl
+		cp bpp_files/A00_theta_01.bpp.ctl $dir/bpp/1/bpp.ctl
 	
 	else 
-		cp A00_theta_0025.bpp.ctl $dir/bpp/1/bpp.ctl
+		cp bpp_files/A00_theta_0025.bpp.ctl $dir/bpp/1/bpp.ctl
 	
 	fi
 else
 	if [[ $theta == "0.01" ]] 
 	then
-		cp A01_theta_01.bpp.ctl $dir/bpp/1/bpp.ctl
+		cp bpp_files/A01_theta_01.bpp.ctl $dir/bpp/1/bpp.ctl
 	
 	else 
-		cp A01_theta_0025.bpp.ctl $dir/bpp/1/bpp.ctl
+		cp bpp_files/A01_theta_0025.bpp.ctl $dir/bpp/1/bpp.ctl
 	
 	fi
 fi
@@ -49,10 +49,10 @@ then
 	
 	sed -i 's/1  1  1  1  1/8  8  8  8  8/' $dir/bpp/1/bpp.ctl
 	sed -i 's/1_imap.txt/8_imap.txt/' $dir/bpp/1/bpp.ctl
-	cp 8_imap.txt $dir/bpp/
+	cp bpp_files/8_imap.txt $dir/bpp/
 else
 
-	cp 1_imap.txt $dir/bpp/
+	cp bpp_files/1_imap.txt $dir/bpp/
 fi 
 
 # Change tree topology
