@@ -1,6 +1,7 @@
 Model: 5
 Gaps: 1
-Bootstrap: 100
+Boot_type: 2
+Nboot: 200
 Theta: 0.01
 Lambda: 500.0
 Rate_param: 1.0

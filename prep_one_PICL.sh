@@ -1,4 +1,3 @@
-
 dir=$1
 loci=$2
 s=$3
@@ -51,9 +50,9 @@ if [[ "$analysis" == time ]]
 then
 	if [[ "$tree" == t_B ]]
 	then
-		cp picl_files/sbalanced_picl.tre $dir/treefile.tre
+		cp picl_files/balanced_picl.tre $dir/treefile.tre
 	else
-		cp picl_files/sunbalanced_picl.tre $dir/treefile.tre
+		cp picl_files/unbalanced_picl.tre $dir/treefile.tre
 	fi
 
 fi
