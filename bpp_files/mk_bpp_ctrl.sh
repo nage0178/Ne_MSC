@@ -11,7 +11,7 @@ do
 				echo $dir
 
 				# Prepare sequence data
-				./mk_seq_bpp.sh $dir $s $loci & 
+				bpp_files/mk_seq_bpp.sh $dir $s $loci & 
 
 
 			done
@@ -37,7 +37,7 @@ do
 
 							for dir in ${analysis}/$tree/${scenario}/l${loci}_s${s}/theta${theta}/Ne_$Ne/rep{1..50}
 							do
-								./bpp_one_ctrl.sh $dir $scenario $Ne $theta $loci $s $tree $analysis & 
+								bpp_files/bpp_one_ctrl.sh $dir $scenario $Ne $theta $loci $s $tree $analysis & 
 
 							done
 							wait

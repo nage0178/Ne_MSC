@@ -1,7 +1,7 @@
 
 for loci in 40 160
 do
-	for i in 1 8 #1 8
+	for i in 1 8 
 	do
 		for rep in {1..50} 
 		do
@@ -10,9 +10,6 @@ do
 
 			
 				echo $dir
-				#cat start_nexus.txt > $dir/mcmc_conv.txt
-				#awk '{print "	Tree state_" NR " = [&R] " , $0 }'  $dir/out.mcmc.txt | sed 's/\#[^:]*:/:/g' | sed 's/\#[^:]*;/;/g' >> $dir/mcmc_conv.txt 
-				#echo End\; >> $dir/mcmc_conv.txt
 				 sed 's/\#[^:]*:/:/g' $dir/out.mcmc.txt | sed 's/\#[^:]*;/;/g' >> $dir/mcmc_no_theta.txt 
 
 
@@ -43,7 +40,7 @@ do
 								continue
 							fi 
 
-							Rscript topology_convergence.R $dir Rconvergence_plots $out & 
+							Rscript bpp_files/topology_convergence.R $dir Rconvergence_plots $out & 
 
 
 						done
