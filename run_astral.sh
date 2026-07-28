@@ -25,7 +25,7 @@ do
 				if [ -f $dir/raxml/all_raxml.tre  ]
 				then
 					echo $dir
-					astral4 -R -o $dir/astral.tre -i $dir/raxml/all_raxml.tre --seed $seed --root O -a astral_map_${i}.txt &> $dir/outAstral & 
+					astral4 -R -o $dir/astral.tre -i $dir/raxml/all_raxml.tre --seed $seed --root O -a astral_files/astral_map_${i}.txt &> $dir/outAstral & 
 				fi
 
 			done
