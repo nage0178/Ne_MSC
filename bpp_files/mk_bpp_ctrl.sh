@@ -49,4 +49,30 @@ do
 	done
 done
 
+for loci in 40 160
+do
+	for s in 1 8 
+	do
+		for theta in 0.01 0.0025
+		do
+			for tree in t_U t_B
+			do
+				for Ne in i d
+				do
+
+					for dir in time/$tree/s3/l${loci}_s${s}/theta${theta}/Ne_$Ne/rep{1..50}
+					do
+						bpp_files/ghost_bpp_one_ctrl.sh $dir $Ne $theta $loci $s $tree & 
+
+					done
+					wait
+					
+				done
+				
+			done
+		done
+	done
+done
+
+
 wait
