@@ -17,7 +17,7 @@ for ((i=2; i<=loci;i++))
 do
 	sed -E 's/([0-9])$/\1\t/' $dir/fasta/l${i}.fa  > $dir/tmp_${i}
 	tr -d '\n' < $dir/tmp_${i} > $dir/tmp2_${i}
-	sed -E  's/>/\n>/g' $dir/tmp2_${i} | sort | sed -E 's/>n([0-9])\t//g' > $dir/tmp_$i 
+	sed -E  's/>/\n>/g' $dir/tmp2_${i} | sort | sed -E 's/>n([0-9]*)\t//g' > $dir/tmp_$i 
 
 done
 
