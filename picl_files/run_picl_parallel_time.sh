@@ -4,7 +4,7 @@ echo time/{t_U,t_B}/s1/l{40,160}_s{1,8}/theta{0.01,0.0025}/Ne_i >> lists/dirList
 
 for rep in {1..50} 
 do
-	./run_picl_one_thread.sh $rep lists/dirListPiclTime  &>  piclOutput/timeThread${rep} & 
+	picl_files/run_picl_one_thread.sh $rep lists/dirListPiclTime  &>  piclOutput/timeThread${rep} & 
 
 done
 wait

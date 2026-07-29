@@ -64,8 +64,6 @@ times <- do.call(rbind, lapply(directories, get_times))
 colnames(times) <- c("t1", "t2", "t3", "t4")
 
 # Get the confidence internals 
-tmp <-lapply(directories, get_CI)
-print(tmp)
 CI <- do.call(rbind, lapply(directories, get_CI))
 colnames(CI) <-  c("t1_2.5", "t2_2.5", "t3_2.5", "t4_2.5","t1_97.5", "t2_97.5", "t3_97.5", "t4_97.5")
 
