@@ -13,8 +13,9 @@ do
 				fi
 
 				echo $dir
-				cd /storage/anna/Ne_MSC/$dir
+				cd $dir
 				tail -n1 out.txt | sed 's/^/(O,/g' | sed 's/;/);/g' > MAP.txt &
+				cd ../../../../../../../../../
 
 			done
 			wait
