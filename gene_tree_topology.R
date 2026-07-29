@@ -11,7 +11,7 @@ check_dist <- function(input_tree, true_tree=rooted_tree) {
 for (tree_top in c("u", "b")) {
 
 	# Read in table with names of all simulated gene trees
-	input_trees <- read.table(paste(tree_top, "_list_gtree.txt", sep = ""), header = FALSE)
+	input_trees <- read.table(paste("lists/", tree_top, "_list_gtree.txt", sep = ""), header = FALSE)
 	input_trees <- input_trees[, 1]
 
 	# Read in the tree, get the RF distance

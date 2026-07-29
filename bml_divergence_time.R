@@ -6,7 +6,7 @@ getTimes <- function(file) {
 
 }
 
-input_trees <- read.table("bml_list_tree.txt", header = FALSE)
+input_trees <- read.table("lists/bml_list_tree.txt", header = FALSE)
 trees <- unlist(apply(input_trees, 1, strsplit, split = "/"))
 trees <- matrix(trees, nrow = nrow(input_trees), byrow =TRUE)
 

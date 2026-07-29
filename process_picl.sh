@@ -1,4 +1,4 @@
-for partDir in $(cat dirListPicl)
+for partDir in $(cat lists/dirListPicl)
 do
 	for rep in {1..50} 
 	do
@@ -10,7 +10,7 @@ do
 	wait
 done
 
-for partDir in $(cat dirListPiclTime)
+for partDir in $(cat lists/dirListPiclTime)
 do
 	for rep in {1..50} 
 	do

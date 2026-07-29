@@ -8,11 +8,8 @@ do
 		analysisDir=/storage/anna/Ne_MSC/$dir/rep${rep}/bpp/${mcmc}
 		echo $analysisDir
 		cd $analysisDir
-		
-		output=$(ls -lh $fileCheck | grep "Jul 22" )
 
-		if [[ ! -n "$output" ]]; then
-		#if [ ! -f $fileCheck ] ; then
+		if [ ! -f $fileCheck ] ; then
 			bpp --cfile bpp.ctl &> outBpp 
 		fi
 	done

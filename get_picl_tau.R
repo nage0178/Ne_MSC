@@ -1,8 +1,7 @@
 library(ape)
 
 rep <- 50
-#directories <- read.table("dirListTimeTwo", header = FALSE)
-directories <- read.table("dirListTime", header = FALSE)
+directories <- read.table("lists/dirListTime", header = FALSE)
 
 # Repeat each directory 50 times for the replicates
 trees <- c(matrix(directories[,1], nrow = rep, ncol = length(directories[,1]), byrow = TRUE))

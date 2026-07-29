@@ -2,7 +2,7 @@ library(phangorn)
 
 # Read in list of files
 # There is only one tree file for bpp (not one for each MCMC)
-input_trees <- read.table("list_tree.txt", header = FALSE)
+input_trees <- read.table("lists/list_tree.txt", header = FALSE)
 
 # Remove MCMCs that did not converge
 not_converged <- read.table("notConverged.csv", header = FALSE)[, 1]
