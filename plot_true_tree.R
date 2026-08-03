@@ -35,3 +35,33 @@ plot.phylo(time_balanced,   direction = "downwards", srt = 90, adj = 0.5, label.
 mtext(substitute(paste(bold('d'))), adj = adj_label, line = line_label, cex = label_size)
 
 dev.off()
+
+time_balanced_1  <- read.tree("trees/true_balanced_time_1.tre")
+time_balanced_8  <- read.tree("trees/true_balanced_time_8.tre")
+
+time_unbalanced_1    <- read.tree("trees/true_unbalanced_time_1.tre")
+time_unbalanced_8    <- read.tree("trees/true_unbalanced_time_8.tre")
+
+
+pdf("~/Ne_MSC_write/manuscript/figs/simulation_trees_piecewise.pdf", width = 6 * scale, height = 6 * scale )
+par(mfrow = c(2, 2))
+par(mar = c(.5, 3.5, .5, 0.05)) 
+par(mgp = c(3, 0.7, 0)) 
+
+
+plot.phylo(time_unbalanced_1, direction = "downwards", srt = 180, adj = 0.5, label.offset = .2, underscore = TRUE)
+mtext(substitute(paste(bold('a'))), adj = adj_label, line = line_label, cex = label_size)
+axis(side = 2, at = c(0, 2.5, 5, 7.5), line = 1.5, labels = c(0,  expression(paste("2.5", theta)), expression(paste("5", theta)), expression(paste("7.5", theta))), las = 1, cex.axis = .75)
+#axisPhylo(las = 1, cex.axis = .75, line = 1.5)
+
+plot.phylo(time_unbalanced_8,   direction = "downwards", srt = 180, adj = 0.5, label.offset = .2, underscore = TRUE)
+mtext(substitute(paste(bold('b'))), adj = adj_label, line = line_label, cex = label_size)
+
+plot.phylo(time_balanced_1, direction = "downwards", srt = 180, adj = 0.5, label.offset = .2, underscore = TRUE)
+mtext(substitute(paste(bold('c'))), adj = adj_label, line = line_label, cex = label_size)
+axis(side = 2, at = c(0, 2.5, 5, 7.5), line = 1.5, labels = c(0,  expression(paste("2.5", theta)), expression(paste("5", theta)), expression(paste("7.5", theta))), las = 1, cex.axis = .75)
+
+plot.phylo(time_balanced_8,   direction = "downwards", srt = 180, adj = 0.5, label.offset = .2, underscore = TRUE)
+mtext(substitute(paste(bold('d'))), adj = adj_label, line = line_label, cex = label_size)
+
+dev.off()
