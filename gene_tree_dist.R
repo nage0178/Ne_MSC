@@ -18,7 +18,7 @@ topology <- which(gtree_sub$experiment == "topology")
 
 g_dist_topology_comb <- ggplot(gtree_sub, aes(x = interaction(Ne, demography), fill = fct_rev(dist))) +
   facet_grid(~experiment) +
-  geom_bar(position = "fill", color = "white") +  scale_fill_viridis_d(option = "viridis") + 
+  geom_bar(position = "fill") +  scale_fill_viridis_d(option = "viridis") + 
   labs(fill = "RF distance", x = "", y = "proportion of gene trees") +theme_bw() + 
   scale_x_discrete(
     labels = c(
@@ -44,7 +44,7 @@ dev.off()
 
 g_dist_topology <- ggplot(gtree_sub[topology, ], aes(x = interaction(Ne, demography), fill = fct_rev(dist))) + 
   facet_grid(theta~topology, labeller = label_bquote( theta == .(theta))) +
-  geom_bar(position = "fill", color = "white") +  scale_fill_viridis_d(option = "viridis") + 
+  geom_bar(position = "fill") +  scale_fill_viridis_d(option = "viridis") + 
   labs(fill = "RF\ndistance", x = "demography", y = "proportion of gene trees") +theme_bw() + 
   scale_x_discrete(
     labels = c(
@@ -66,7 +66,7 @@ dev.off()
 
 g_dist_time <- ggplot(gtree_sub[-topology, ], aes(x = interaction(Ne, demography), fill = fct_rev(dist))) + 
   facet_grid(theta~topology, labeller = label_bquote( theta == .(theta))) +
-  geom_bar(position = "fill", color = "white") +  scale_fill_viridis_d(option = "viridis") + 
+  geom_bar(position = "fill") +  scale_fill_viridis_d(option = "viridis") + 
   labs(fill = "RF\ndistance", x = "demography", y = "proportion of gene trees") +theme_bw() + 
   scale_x_discrete(
     labels = c(

@@ -197,7 +197,7 @@ tau_b <- ggplot(times_B[samples_1_b, ], aes(x = interaction(Ne, demography), y =
     )
   ) +  theme_bw() +
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) + 
-  labs(fill = "node", x = "", y = "divergence time", color = "node") + 
+  labs(fill = "balanced\ntree node", x = "", y = "divergence time", color = "balanced\ntree node") + 
   theme(axis.text.x = element_blank(), axis.ticks.x = element_blank(), 
         #  plot.margin = margin(b = 3, t = 5, l = 5, r = 5), 
           plot.tag = element_text(face = "bold")) + 
@@ -217,7 +217,7 @@ tau_u <- ggplot(times_U[samples_1_u, ], aes(x = interaction(Ne, demography), y =
       
     )
   ) +  theme_bw() +
-  labs(fill = "node", x = "", y = "divergence time", color = "node") + #+ 
+  labs(fill = "unbalanced\ntree node", x = "", y = "divergence time", color = "unbalanced\ntree node") +  
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1, size = 7.5),
         strip.text.x = element_blank(),       # Removes the text inside the top facet bars
         strip.background.x = element_blank(),   # Optional: Removes the gray background boxes
@@ -244,7 +244,7 @@ tau_b <- ggplot(times_B[samples_8_b, ], aes(x = interaction(Ne, demography), y =
     )
   ) +  theme_bw() +
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) + 
-  labs(fill = "node", x = "", y = "divergence time", color = "node") + 
+  labs(fill = "balanced\ntree node", x = "", y = "divergence time", color = "balanced\ntree node") + 
   theme(axis.text.x = element_blank(), axis.ticks.x = element_blank(), 
         plot.margin = margin(b = 3, t = 5, l = 5, r = 5), 
         plot.tag = element_text(face = "bold")) + 
@@ -264,7 +264,7 @@ tau_u <- ggplot(times_U[samples_8_u, ], aes(x = interaction(Ne, demography), y =
       
     )
   ) +  theme_bw() +
-  labs(fill = "node", x = "", y = "divergence time", color = "node") + #+ 
+  labs(fill = "unbalanced\ntree node", x = "", y = "divergence time", color = "unbalanced\ntree node") +
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1, size = 7.5),
         strip.text.x = element_blank(),       # Removes the text inside the top facet bars
         strip.background.x = element_blank(),   # Optional: Removes the gray background boxes
