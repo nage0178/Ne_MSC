@@ -50,9 +50,14 @@ results_bpp$loci_samples <- factor(results_bpp$loci_samples,
                                  )
 
 results_bpp$samples <- factor(results_bpp$samples,
-                                 labels=c(expression(paste("samples = 1")),
-                                          expression(paste("samples = 8"))
-                                 ))
+                                 labels=c("samples = 1",
+                                          "samples = 8")
+                                 )
+
+results_bpp$loci <- factor(results_bpp$loci,
+                              labels=c("loci = 40",
+                                       "loci = 160")
+)
 
 tau_row <- grep("tau", results_bpp$parameter)
 tree_row_B <- grep("B", results_bpp$topology)
@@ -119,14 +124,30 @@ tips_U <- which((theta_U$parameter == "theta:1") + (theta_U$parameter == "theta:
 internal_U <- which((theta_U$parameter == "theta:6") + (theta_U$parameter == "theta:7") + 
                       (theta_U$parameter == "theta:8") + (theta_U$parameter == "theta:9") == 1)
 
+stripes <- data.frame(
+  xmin = seq(0.5, 4.5, by = 2), # Start points for shaded regions
+  xmax = seq(1.5, 5.5, by = 2), # End points for shaded regions
+  ymin = -Inf,
+  ymax = Inf
+)
 
-theta_tip_b <- ggplot(theta_B[tips_B, ], aes(x = interaction(Ne, demography), y = mean, fill = parameter)) + 
+theta_tip_b <-
+  ggplot(theta_B[tips_B, ], aes(x = interaction(Ne, demography), y = mean, fill = parameter)) + 
+  geom_rect(
+    data = stripes,
+    aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax),
+    fill = "grey90", 
+    alpha = 0.5,
+    inherit.aes = FALSE
+  ) +
   geom_violin() +
-  facet_grid(theta~loci_samples, scales = "free", labeller = label_bquote( theta == .(theta))) +
+  facet_grid(theta~loci, scales = "free", labeller = label_bquote( theta == .(theta))) +
   geom_hline(data = theta_B[tips_B, ], aes(yintercept = true), linetype = "dashed", ) +
   scale_x_discrete(
     labels = demo_labels
-  ) +  theme_bw() +
+  ) +
+  
+  theme_bw() +
   theme(axis.text.x = element_blank(), axis.ticks.x = element_blank(), 
         plot.tag = element_text(face = "bold"), legend.position = "none") + 
   labs(fill = "node", x = "", y = expression(theta~"for balanced trees")) + 
@@ -135,8 +156,15 @@ theta_tip_b <- ggplot(theta_B[tips_B, ], aes(x = interaction(Ne, demography), y 
   ) +   labs(tag = "a") 
 
 theta_tip_u <- ggplot(theta_U[tips_U, ], aes(x = interaction(Ne, demography), y = mean, fill = parameter)) + 
+  geom_rect(
+    data = stripes,
+    aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax),
+    fill = "grey90", 
+    alpha = 0.5,
+    inherit.aes = FALSE
+  ) +
   geom_violin() + 
-  facet_grid(theta~loci_samples, scales = "free", labeller = label_bquote( theta == .(theta))) +
+  facet_grid(theta~loci, scales = "free", labeller = label_bquote( theta == .(theta))) +
   geom_hline(data = theta_U[tips_U, ], aes(yintercept = true), linetype = "dashed", ) +
   scale_x_discrete(
     labels = demo_labels
@@ -172,6 +200,13 @@ dev.off()
 
 theta_int_b <- 
   ggplot(theta_B[internal_B, ], aes(x = interaction(Ne, demography), y = mean, fill = parameter)) + 
+  geom_rect(
+    data = stripes,
+    aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax),
+    fill = "grey90", 
+    alpha = 0.5,
+    inherit.aes = FALSE
+  ) +
   geom_violin() + 
   facet_grid(theta~loci_samples, scales = "free", labeller = label_bquote( theta == .(theta))) +
   geom_hline(data = theta_B[internal_B, ], aes(yintercept = true), linetype = "dashed", ) +
@@ -187,6 +222,13 @@ theta_int_b <-
 
 
 theta_int_u <- ggplot(theta_U[internal_U, ], aes(x = interaction(Ne, demography), y = mean, fill = parameter)) + 
+  geom_rect(
+    data = stripes,
+    aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax),
+    fill = "grey90", 
+    alpha = 0.5,
+    inherit.aes = FALSE
+  ) +
   geom_violin() + 
   facet_grid(theta~loci_samples, scales = "free", labeller = label_bquote( theta == .(theta))) +
   geom_hline(data = theta_U[internal_U, ], aes(yintercept = true), linetype = "dashed", ) +
