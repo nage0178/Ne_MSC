@@ -5,7 +5,7 @@ library(phangorn)
 input_trees <- read.table("lists/list_tree.txt", header = FALSE)
 
 # Remove MCMCs that did not converge
-not_converged <- read.table("notConverged.csv", header = FALSE)[, 1]
+not_converged <- read.table("bpp_files/notTopologyConverged.csv", header = FALSE)[, 1]
 
 simulations <- unlist(apply(input_trees, 1, strsplit, split = "/"))
 # Bpp has two additional directories in the path which we don't need to keep
@@ -32,10 +32,13 @@ unbalanced <- grepl("t_U", input_trees)
 t_trueU <- read.tree("trees/unbalanced.tre")
 t_trueB <- read.tree("trees/balanced.tre")
 
-dist <- rep(NA, length(input_trees))
+simulations$dist <- rep(NA, length(input_trees))
+simulations$PP <- rep(NA, length(input_trees))
 
 # For every tree find the RF distance to the true tree
 for (i in 1:length(input_trees)) {
+  if (! (file.exists(input_trees[i]) && file.size(input_trees[i]) > 0))
+	  next
   t_infer <- read.tree(input_trees[i])
   rooted_tree <- root(t_infer, outgroup = "O", resolve.root = TRUE)	
 
@@ -48,14 +51,18 @@ for (i in 1:length(input_trees)) {
 
   # Skip trees that did not converge
   if (input_trees[i] %in% not_converged){
-	 dist[i] <- NA
+	 simulations$dist[i] <- NA
 	 next 
   }
 
   if (unbalanced[i]) 
-  	dist[i] <- treedist(t_infer, t_trueU)[1]
+  	simulations$dist[i] <- treedist(t_infer, t_trueU)[1]
   else 
-  	dist[i] <- treedist(t_infer, t_trueB)[1]
+  	simulations$dist[i] <- treedist(t_infer, t_trueB)[1]
+  if (simulations$analysis[i] == "MAP.txt") {
+	  pp <- read.table(sub("MAP", "PP_MAP", input_trees[i]))[1,1]
+	  simulations$PP[i] <- pp
+  }
 }
 
-write.csv(cbind(simulations,dist), "results.csv", quote = FALSE, row.names = FALSE)
+write.csv(simulations, "results.csv", quote = FALSE, row.names = FALSE)
