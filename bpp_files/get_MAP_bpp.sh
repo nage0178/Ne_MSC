@@ -14,7 +14,8 @@ do
 
 				echo $dir
 				cd $dir
-				tail -n1 out.txt | sed 's/^/(O,/g' | sed 's/;/);/g' > MAP.txt &
+				tail -n1 out.txt | sed 's/^/(O,/g' | sed 's/;/);/g' > MAP.txt 
+				awk -F = '{print $2}' MAP.txt | sed 's/\]//g'  | sed 's/ //g' > PP_MAP.txt
 				cd ../../../../../../../../../
 
 			done

@@ -1,6 +1,6 @@
 library(phangorn)
-input_trees <- read.table("lists/bpp_tree_samples_8.txt", header = FALSE)
-#input_trees <- read.table("lists/bpp_tree.txt", header = FALSE)
+#input_trees <- read.table("lists/bpp_tree_samples_8.txt", header = FALSE)
+input_trees <- read.table("lists/bpp_tree.txt", header = FALSE)
 
 simulations <- unlist(apply(input_trees, 1, strsplit, split = "/"))
 rm_bpp1 <-which(simulations == "bpp")
@@ -28,7 +28,7 @@ for (i in seq(from= 1, to = length(input_trees), by = 2)) {
   dist[i] <- treedist(MCMC_1, MCMC_2)[1]
 }
 
-write.table(input_trees[which(dist != 0)], file = "notTopologyConverged_8.csv", quote = FALSE, row.names = FALSE, col.names = FALSE)
+write.table(input_trees[which(dist != 0)], file = "bpp_files/notTopologyConverged.csv", quote = FALSE, row.names = FALSE, col.names = FALSE)
 dist <- dist[-seq(from =2, by =2, to = length(input_trees))]
 mean(dist)
 head(dist)
