@@ -164,10 +164,10 @@ results_SNP <- results_SNP %>%
   mutate(loci_theta= interaction(loci, theta, sep = "_")) 
 
 results_SNP$loci_theta <- factor(results_SNP$loci_theta,
-                                      labels=c(expression(atop(paste(loci," = ", 5000,),  paste( theta, " = 0.0025"))),
-                                               expression(atop(paste(loci," = ", 20000,), paste( theta, " = 0.0025"))),
-                                               expression(atop(paste(loci," = ", 5000,),  paste( theta, " = 0.01"))),
-                                               expression(atop(paste(loci," = ", 20000,), paste( theta, " = 0.01")))
+                                      labels=c(expression(atop(paste(sites," = ", 5000,),  paste( theta, " = 0.0025"))),
+                                               expression(atop(paste(sites," = ", 20000,), paste( theta, " = 0.0025"))),
+                                               expression(atop(paste(sites," = ", 5000,),  paste( theta, " = 0.01"))),
+                                               expression(atop(paste(sites," = ", 20000,), paste( theta, " = 0.01")))
                                       ))
 
 results_SNP <- results_SNP %>%
