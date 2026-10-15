@@ -1,4 +1,4 @@
-for loci in  5000 20000 
+for loci in 20000 80000 
 do
 	for s in 1 8 
 	do
@@ -16,7 +16,7 @@ do
 						# Prepare sequence data
 						if [ -f SNP/$dir/combined.fa ] ; then
 							echo SNP/$dir
-							picl_files/prep_one_SNP.sh SNP/$dir $loci $s $analysis $tree  & 
+							picl_files/prep_one_SNP.sh SNP/$dir $loci $s $analysis $tree $theta  & 
 						fi
 
 					done

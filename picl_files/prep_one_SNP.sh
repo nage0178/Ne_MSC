@@ -1,11 +1,15 @@
-dir=$1
+orgDir=$1
 loci=$2
 s=$3
 analysis=$4
 tree=$5
+theta=$6
+
+mkdir -p  $orgDir/picl_model1
+dir=$orgDir/picl_model1
 
 # Adds tab after sequence name
-sed -E 's/([0-9])$/\1\t/' $dir/combined.fa > $dir/tmp.fa
+sed -E 's/([0-9])$/\1\t/' $orgDir/combined.fa > $dir/tmp.fa
 # Removes new line
 tr -d '\n' < $dir/tmp.fa > $dir/tmp2.fa
 
@@ -15,32 +19,37 @@ sed -E 's/>/\n/g' $dir/tmp2.fa | tail -n+3  >  $dir/data.phy
 if [[ "$loci" == 5000 && "$s" == 1 ]]
 then
 	sed -i '1i 5 5000' $dir/data.phy 
-	cp picl_files/settings_1_$analysis $dir/settings
+	cp picl_files/m1_settings_1_$analysis $dir/settings
 
 elif [[ "$loci" == 5000 && "$s" == 8 ]]
 then
 	sed -i '1i 40 5000' $dir/data.phy 
-	cp picl_files/settings_8_$analysis $dir/settings
+	cp picl_files/m1_settings_8_$analysis $dir/settings
 
 elif [[ "$loci" == 20000 && "$s" == 1 ]]
 then
 	sed -i '1i 5 20000' $dir/data.phy 
-	cp picl_files/settings_1_$analysis $dir/settings
+	cp picl_files/m1_settings_1_$analysis $dir/settings
 
 elif [[ "$loci" == 20000 && "$s" == 8 ]]
 then
 	sed -i '1i 40 20000' $dir/data.phy 
-	cp picl_files/settings_8_$analysis $dir/settings
+	cp picl_files/m1_settings_8_$analysis $dir/settings
 
 elif [[ "$loci" == 80000 && "$s" == 1 ]]
 then
 	sed -i '1i 5 80000' $dir/data.phy 
-	cp picl_files/settings_1_$analysis $dir/settings
+	cp picl_files/m1_settings_1_$analysis $dir/settings
 
 elif [[ "$loci" == 80000 && "$s" == 8 ]]
 then
 	sed -i '1i 40 80000' $dir/data.phy 
-	cp picl_files/settings_8_$analysis $dir/settings
+	cp picl_files/m1_settings_8_$analysis $dir/settings
+fi
+
+if [[ "$theta" == 0.0025 ]]
+then
+	sed -i "s/Theta: 0.005/Theta: 0.00125/" $dir/settings
 fi
 
 if [[ "$analysis" == time ]]
@@ -53,3 +62,6 @@ then
 	fi
 
 fi
+
+rm $dir/tmp.fa
+rm $dir/tmp2.fa
