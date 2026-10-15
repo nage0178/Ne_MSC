@@ -3,6 +3,7 @@ loci=$2
 s=$3
 analysis=$4
 tree=$5
+theta=$6
 
 i=1
 # Adds tab after sequence name 
@@ -56,4 +57,9 @@ then
 	fi
 
 fi
-rm $dir/tmp*
+
+sed -i "s/Theta: 0.01/Theta: $theta/" $dir/settings
+sed -i 's/model = 5/model = 1/g' $dir/settings
+sed -i 's/200/1/g' $dir/settings
+
+rm -f $dir/tmp*

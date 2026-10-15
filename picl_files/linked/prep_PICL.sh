@@ -15,7 +15,7 @@ do
 						echo $dir
 
 						# Prepare sequence data
-						picl_files/prep_one_PICL.sh $dir $loci $s $analysis $tree  & 
+						picl_files/prep_one_PICL.sh $dir $loci $s $analysis $tree $theta & 
 
 					done
 					wait

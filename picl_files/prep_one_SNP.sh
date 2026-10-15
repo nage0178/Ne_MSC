@@ -31,6 +31,16 @@ elif [[ "$loci" == 20000 && "$s" == 8 ]]
 then
 	sed -i '1i 40 20000' $dir/data.phy 
 	cp picl_files/settings_8_$analysis $dir/settings
+
+elif [[ "$loci" == 80000 && "$s" == 1 ]]
+then
+	sed -i '1i 5 80000' $dir/data.phy 
+	cp picl_files/settings_1_$analysis $dir/settings
+
+elif [[ "$loci" == 80000 && "$s" == 8 ]]
+then
+	sed -i '1i 40 80000' $dir/data.phy 
+	cp picl_files/settings_8_$analysis $dir/settings
 fi
 
 if [[ "$analysis" == time ]]
