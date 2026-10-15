@@ -4,7 +4,7 @@ get_times <- function(dir) {
 	rep <- 50
 	times <- matrix(NA, nrow = rep, ncol = 4)
 	for (i in c(1:rep)) {
-		file <- paste(dir,"/rep", i, "/picl_best.tre", sep = "")
+		file <- paste(dir,"/rep", i, "/picl_model1/picl_best.tre", sep = "")
 		if (! file.exists(file)) {
 			print(file)
 			next	
