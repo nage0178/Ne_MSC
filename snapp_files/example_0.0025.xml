@@ -60,9 +60,9 @@ name="rawdata">
         <distribution id="posterior" spec="CompoundDistribution">
             <distribution id="prior" spec="CompoundDistribution">
                 <prior id="lambdaPrior.snps" name="distribution" x="@lambda">
-                    <Gamma id="Gamma.0" mode="ShapeRate" name="distr">
-                        <parameter id="RealParameter.0" spec="parameter.RealParameter" estimate="false" name="alpha">75.0</parameter>
-                        <parameter id="RealParameter.1" spec="parameter.RealParameter" estimate="false" name="beta">1.00</parameter>
+                    <Gamma id="Gamma.0" name="distr">
+                        <parameter id="RealParameter.0" spec="parameter.RealParameter" estimate="false" name="alpha">2.0</parameter>
+                        <parameter id="RealParameter.1" spec="parameter.RealParameter" estimate="false" name="beta">60.00</parameter>
                     </Gamma>
                 </prior>
                 <distribution id="snapprior.snps" spec="snap.likelihood.SnAPPrior" coalescenceRate="@coalescenceRate" lambda="@lambda" tree="@Tree.snps">

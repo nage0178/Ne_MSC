@@ -22,11 +22,11 @@ do
 						cd /storage/anna/Ne_MSC/$dir
 						echo $dir
 
-						mkdir -p prior
-						cp snap.xml prior 
-						cd prior
+						#mkdir -p prior
+						#cp snap.xml prior 
+						#cd prior
 						#beast -seed 1 -sampleFromPrior -overwrite snap.xml  &> outSnap & 
-						#beast -seed 1 -overwrite snap.xml  &> outSnap & 
+						beast -seed 1 -overwrite snap.xml  &> outSnap & 
 						treeannotator snap.trees > ann_snp.tree & 
 
 					done
