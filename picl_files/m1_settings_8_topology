@@ -2,7 +2,7 @@ Model: 1
 Gaps: 1
 Boot_type: 0
 Nboot: 0 
-Theta: 0.005
+Theta: 0.01
 Alpha: 10.0
 Lambda: 500.0
 Rate_param: 1.0
@@ -14,7 +14,7 @@ Seed1: 1
 Seed2: 2 
 Num_cat: 1
 Tree_search: 2
-Num_iter: 300000
+Max_iter: 300000
 Multi_iter: 3
 Prob_bound: 0.05
 Test_incr: 250
