@@ -1,8 +1,17 @@
 setwd("~/Ne_MSC")
+source("bpp_bl.R")
+source("picl_bl.R")
+
 astral <- read.csv("astral_bl.csv")
 results_bl <- astral %>% pivot_longer( cols = 10:18,
                                               names_to = "node",
                                               values_to = "branch_length")
+results_bl$analysis <- "ASTRAL"
+long_bl$analysis <- "bpp"
+results_picl$analysis <- "PICL"
+
+results_bl <- rbind(results_bl, long_bl)
+results_bl <- rbind(results_bl, results_picl)
 
 
 names <- c("A", "B", "C", "D", "E", "AB", "ABC", "ABCD_DE", "ABCDE")
@@ -27,15 +36,20 @@ for (i in 1:length(names)) {
   
   results_bl$true[index] <- results_bl$true[index] * true_u[i]
 }
+
+#####
 results_interact <- results_bl %>%
   mutate(loci_theta= interaction(loci, theta, sep = "_")) 
 
-results_interact$loci_theta = factor(results_interact$loci_theta,
-                                       labels=c(expression(atop(paste(loci," = ", 40,),  paste( theta, " = 0.0025"))),
-                                                expression(atop(paste(loci," = ", 160,), paste( theta, " = 0.0025"))),
-                                                expression(atop(paste(loci," = ", 40,),  paste( theta, " = 0.01"))),
-                                                expression(atop(paste(loci," = ", 160,), paste( theta, " = 0.01")))
-                                       ))
+results_interact$loci_theta <- factor(
+  results_interact$loci_theta,
+  labels = c(
+    "loci = 40<br>sites = 20000<br>&theta; = 0.0025",
+    "loci = 160<br>sites = 80000<br>&theta; = 0.0025",
+    "loci = 40<br>sites = 20000<br>&theta; = 0.01",
+    "loci = 160<br>sites = 80000<br>&theta; = 0.01"
+  )
+)
 
 results_interact <- results_interact %>%
   mutate(samples_topo= interaction(samples, topology, sep = "_")) 
@@ -67,21 +81,50 @@ for (node in names(table(results_interact$node))) {
     ylab <-"branch length ancestral to\nDE (balanced) or ABCD (unbalanced)"
     
   }
-p1 <- ggplot(results_interact[rows, ], aes(x = interaction(Ne, demography), y = branch_length)) + 
+  
+  stripes <- data.frame(
+    xmin = seq(0.5, 4.5, by = 2), # Start points for shaded regions
+    xmax = seq(1.5, 5.5, by = 2), # End points for shaded regions
+    ymin = -Inf,
+    ymax = Inf
+  )
+  
+p1 <- ggplot(results_interact[rows, ], aes(x = interaction(Ne, demography), y = branch_length, fill = analysis)) + 
+  geom_rect(
+    data = stripes,
+    aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax),
+    fill = "grey80", 
+    alpha = 0.5,
+    inherit.aes = FALSE
+  ) +
   geom_hline(data = results_interact[rows, ], aes(yintercept = true), linetype = "dashed", ) +
   geom_violin() + #, alpha = .6
-  facet_grid(loci_theta~samples_topo, scales = "free", labeller = label_parsed, space = "free_x") + 
+  facet_grid(loci_theta~samples_topo, scales = "free",  labeller = labeller(
+    loci_theta = label_value,
+    samples_topo = label_parsed
+  ), space = "free_x") + 
+  #facet_grid(loci_theta~samples_topo, scales = "free", space = "free_x") + 
+  
   scale_x_discrete(labels = demo_labels ) +  
   theme_bw() +
-  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) +
+  theme( legend.box.margin = margin(t = -25, r = 0, b = -10, l = 0) , 
+         legend.position = "bottom", axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1),
+        strip.text.y = ggtext::element_markdown(
+          # size = 10,
+          angle = 270,
+          lineheight = 1.1
+        )
+        ) +
   labs( x = "", y = ylab) #+ 
-  #theme(axis.text.x = element_blank(), axis.ticks.x = element_blank(), 
-        #  plot.margin = margin(b = 3, t = 5, l = 5, r = 5), 
-  #      plot.tag = element_text(face = "bold")) + 
-  #labs(tag = "a")  
   p_list[[length(p_list) + 1]] <- p1
   
-  pdf(paste("~/Ne_MSC_write/manuscript/figs/astral_bl_", node, ".pdf", sep = ""), width = 9, height = 4.75 *1.5)
-  print(p1)
-  dev.off()
+  
+  ggsave(
+    paste("~/Ne_MSC_write/manuscript/figs/astral_bl_", node, ".pdf", sep = ""),
+    plot = p1,
+    device = cairo_pdf,
+    width = 9,
+    height = 4.75 *1.5
+  )
+
 }
