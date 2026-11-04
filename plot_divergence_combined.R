@@ -5,66 +5,96 @@ library(dplyr)
 
 setwd("~/Ne_MSC")
 
-
 #####
-# # Format PICL results
-# 
-# results_picl <- read.csv("picl_times.csv")
-# 
-# results_picl<- results_picl %>% pivot_longer( cols = 10:13, 
-#                                               names_to = "node", 
-#                                               values_to = "time")
-# 
-# results_picl$true <- results_picl$theta
-# row_b <- which(results_picl$topology == "t_B")
-# rows <- intersect(which(results_picl$node == "t1"), row_b) # root
-# results_picl$true[rows] <- results_picl$true[rows] * 5
-# results_picl$node[rows] <- "ABCDE"
-# rows <- intersect(which(results_picl$node == "t2"), row_b) # ABC
-# results_picl$true[rows] <- results_picl$true[rows] * 4
-# results_picl$node[rows] <- "ABC"
-# rows <- intersect(which(results_picl$node == "t3"), row_b) # AB
-# results_picl$true[rows] <- results_picl$true[rows] * 3
-# results_picl$node[rows] <- "AB"
-# rows <- intersect(which(results_picl$node == "t4"), row_b) # DE
-# results_picl$true[rows] <- results_picl$true[rows] * 4.5
-# results_picl$node[rows] <- "DE"
-# 
-# # 
-# row_u <- which(results_picl$topology == "t_U")
-# rows <- intersect(which(results_picl$node == "t1"), row_u) # root
-# results_picl$true[rows] <- results_picl$true[rows] * 5
-# results_picl$node[rows] <- "ABCDE"
-# rows <- intersect(which(results_picl$node == "t2"), row_u) # ABCD
-# results_picl$true[rows] <- results_picl$true[rows] * 4
-# results_picl$node[rows] <- "ABCD"
-# rows <- intersect(which(results_picl$node == "t3"), row_u) # ABC
-# results_picl$true[rows] <- results_picl$true[rows] * 3
-# results_picl$node[rows] <- "ABC"
-# rows <- intersect(which(results_picl$node == "t4"), row_u) # AB
-# results_picl$true[rows] <- results_picl$true[rows] * 2.5
-# results_picl$node[rows] <- "AB"
-# 
-# # 
-# results_picl$coverage <- NA
-# row <- which(results_picl$node == "t1")
-# results_picl$coverage[row] <- ((results_picl$true > results_picl$t1_2.5) * 
-#                                  (results_picl$true < results_picl$t1_97.5))[row]
-# row <- which(results_picl$node == "t2")
-# results_picl$coverage[row] <- ((results_picl$true > results_picl$t2_2.5) * 
-#                                  (results_picl$true < results_picl$t2_97.5))[row]
-# row <- which(results_picl$node == "t3")
-# results_picl$coverage[row] <- ((results_picl$true > results_picl$t3_2.5) * 
-#                                  (results_picl$true < results_picl$t3_97.5))[row]
-# row <- which(results_picl$node == "t4")
-# results_picl$coverage[row] <- ((results_picl$true > results_picl$t4_2.5) * 
-#                                  (results_picl$true < results_picl$t4_97.5))[row]
-# 
-# picl_cols <- c(1, 2, 3, 4, 5, 6, 7, 8, 9, 18, 19, 20, 21)
-# picl <- results_picl[, picl_cols]
-# colnames(picl)[11] <- "mean"
-# colnames(picl)[10] <- "parameter"
-# picl$analysis <- "picl"
+# Format PICL results
+
+results_picl <- read.csv("picl_timesSNP.csv")
+
+results_picl<- results_picl %>% pivot_longer( cols = 10:13,
+                                              names_to = "node",
+                                              values_to = "time")
+
+results_picl$true <- results_picl$theta
+row_b <- which(results_picl$topology == "t_B")
+rows <- intersect(which(results_picl$node == "t1"), row_b) # root
+results_picl$true[rows] <- results_picl$true[rows] * 5
+results_picl$node[rows] <- "ABCDE"
+rows <- intersect(which(results_picl$node == "t2"), row_b) # ABC
+results_picl$true[rows] <- results_picl$true[rows] * 4
+results_picl$node[rows] <- "ABC"
+rows <- intersect(which(results_picl$node == "t3"), row_b) # AB
+results_picl$true[rows] <- results_picl$true[rows] * 3
+results_picl$node[rows] <- "AB"
+rows <- intersect(which(results_picl$node == "t4"), row_b) # DE
+results_picl$true[rows] <- results_picl$true[rows] * 4.5
+results_picl$node[rows] <- "DE"
+
+#
+row_u <- which(results_picl$topology == "t_U")
+rows <- intersect(which(results_picl$node == "t1"), row_u) # root
+results_picl$true[rows] <- results_picl$true[rows] * 5
+results_picl$node[rows] <- "ABCDE"
+rows <- intersect(which(results_picl$node == "t2"), row_u) # ABCD
+results_picl$true[rows] <- results_picl$true[rows] * 4
+results_picl$node[rows] <- "ABCD"
+rows <- intersect(which(results_picl$node == "t3"), row_u) # ABC
+results_picl$true[rows] <- results_picl$true[rows] * 3
+results_picl$node[rows] <- "ABC"
+rows <- intersect(which(results_picl$node == "t4"), row_u) # AB
+results_picl$true[rows] <- results_picl$true[rows] * 2.5
+results_picl$node[rows] <- "AB"
+
+#
+results_picl$coverage <- NA
+row <- which(results_picl$node == "t1")
+results_picl$coverage[row] <- ((results_picl$true > results_picl$t1_2.5) *
+                                 (results_picl$true < results_picl$t1_97.5))[row]
+row <- which(results_picl$node == "t2")
+results_picl$coverage[row] <- ((results_picl$true > results_picl$t2_2.5) *
+                                 (results_picl$true < results_picl$t2_97.5))[row]
+row <- which(results_picl$node == "t3")
+results_picl$coverage[row] <- ((results_picl$true > results_picl$t3_2.5) *
+                                 (results_picl$true < results_picl$t3_97.5))[row]
+row <- which(results_picl$node == "t4")
+results_picl$coverage[row] <- ((results_picl$true > results_picl$t4_2.5) *
+                                 (results_picl$true < results_picl$t4_97.5))[row]
+
+results_picl$CI_size <- NA
+row <- which(results_picl$node == "t1")
+results_picl$CI_size [row] <- (results_picl$t1_97.5 -results_picl$t1_2.5) [row]
+row <- which(results_picl$node == "t2")
+results_picl$CI_size [row] <- (results_picl$t2_97.5 -results_picl$t2_2.5) [row]
+row <- which(results_picl$node == "t3")
+results_picl$CI_size [row] <- (results_picl$t3_97.5 -results_picl$t3_2.5) [row]
+row <- which(results_picl$node == "t4")
+results_picl$CI_size [row] <- (results_picl$t4_97.5 -results_picl$t4_2.5) [row]
+
+results_picl$X2.5HPD <- NA
+row <- which(results_picl$node == "t1")
+results_picl$X2.5HPD [row] <- (results_picl$t1_2.5) [row]
+row <- which(results_picl$node == "t2")
+results_picl$X2.5HPD [row] <- (results_picl$t2_2.5) [row]
+row <- which(results_picl$node == "t3")
+results_picl$X2.5HPD [row] <- (results_picl$t3_2.5) [row]
+row <- which(results_picl$node == "t4")
+results_picl$X2.5HPD [row] <- (results_picl$t4_2.5) [row]
+
+results_picl$X97.5HPD <- NA
+row <- which(results_picl$node == "t1")
+results_picl$X97.5HPD [row] <- (results_picl$t1_97.5) [row]
+row <- which(results_picl$node == "t2")
+results_picl$X97.5HPD [row] <- (results_picl$t2_97.5) [row]
+row <- which(results_picl$node == "t3")
+results_picl$X97.5HPD [row] <- (results_picl$t3_97.5) [row]
+row <- which(results_picl$node == "t4")
+results_picl$X97.5HPD [row] <- (results_picl$t4_97.5) [row]
+
+
+picl_cols <- c(1, 2, 3, 4, 5, 6, 7, 8, 9, 18, 19, 20, 21, 22, 23, 24)
+picl <- results_picl[, picl_cols]
+colnames(picl)[11] <- "mean"
+colnames(picl)[10] <- "parameter"
+picl$analysis <- "PICL"
 
 #####
 # Format bpp results
@@ -166,34 +196,15 @@ source("relabel_ghost.R")
 
 #####
 results_comb <- rbind(bpp, baseml)
-#results_comb <- rbind(results_comb, picl)
+results_comb <- rbind(results_comb, picl)
 results_comb <- rbind(results_comb, results_ghost_rename)
 
-results_comb <- results_comb %>%
+#####
+results_cov<- rbind(bpp, results_ghost_rename)
+
+results_cov <- results_cov %>%
   mutate(loci_theta= interaction(loci, theta, sep = "_")) 
 
-results_comb$loci_theta <- factor(results_comb$loci_theta,
-                             labels=c(expression(atop(paste(loci," = ", 40,),  paste( theta, " = 0.0025"))),
-                                      expression(atop(paste(loci," = ", 160,), paste( theta, " = 0.0025"))),
-                                      expression(atop(paste(loci," = ", 40,),  paste( theta, " = 0.01"))),
-                                      expression(atop(paste(loci," = ", 160,), paste( theta, " = 0.01")))
-                             ))
-
-
-tree_row_B <- grep("B", results_comb$topology)
-tree_row_U <- grep("U", results_comb$topology)
- 
-times_B <- results_comb[tree_row_B, ]
-times_B$parameter <- factor(times_B$parameter, levels = c("ABCDE", "DE","ABC", "AB"))
-
-times_U <- results_comb[tree_row_U, ]
-times_U$parameter <- factor(times_U$parameter, levels = c("ABCDE", "ABCD", "ABC", "AB"))
-
-
-samples_1_b <- which(times_B$samples == 1)
-samples_1_u <- which(times_U$samples == 1)
-samples_8_b <- which(times_B$samples == 8)
-samples_8_u <- which(times_U$samples == 8)
 demo_labels <- c(
   "Ne_i.s1" = "constant",
   "Ne_d.s2" = "exponential\nsmaller",
@@ -203,80 +214,41 @@ demo_labels <- c(
   
 )
 
-tau_b <- ggplot(times_B[samples_1_b, ], aes(x = interaction(Ne, demography), y = mean, fill = parameter)) + 
-  geom_hline(data = times_B, aes(yintercept = true, color = parameter), linetype = "dashed", ) +
-  geom_violin(position=position_dodge(width = 0.0)) + #, alpha = .6
-  facet_grid(loci_theta~analysis, scales = "free", labeller = label_parsed, space = "free_x") + 
-  scale_x_discrete(labels = demo_labels ) +  
-  theme_bw() +
-  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) + 
-  labs(fill = "balanced\ntree node", x = "", y = "divergence time", color = "balanced\ntree node") + 
-  theme(axis.text.x = element_blank(), axis.ticks.x = element_blank(), 
-        #  plot.margin = margin(b = 3, t = 5, l = 5, r = 5), 
-          plot.tag = element_text(face = "bold")) + 
-  labs(tag = "a")  
+tree_row_B <- grep("B", results_cov$topology)
+tree_row_U <- grep("U", results_cov$topology)
 
-tau_u <- ggplot(times_U[samples_1_u, ], aes(x = interaction(Ne, demography), y = mean, fill = parameter)) + 
-  geom_hline(data = times_U, aes(yintercept = true, color = parameter), linetype = "dashed", ) +
-  geom_violin(position=position_dodge(width = 0.0)) + #, alpha = .6
-  facet_grid(loci_theta~analysis, scales = "free", labeller = label_parsed, space = "free_x") + 
-  scale_x_discrete(labels = demo_labels ) +  
-  theme_bw() +
-  labs(fill = "unbalanced\ntree node", x = "", y = "divergence time", color = "unbalanced\ntree node") +  
-  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1, size = 7.5),
-        strip.text.x = element_blank(),       # Removes the text inside the top facet bars
-        strip.background.x = element_blank(),   # Optional: Removes the gray background boxes
-        plot.tag = element_text(face = "bold"), 
-  ) +   labs(tag = "b") 
+times_B <- results_cov[tree_row_B, ]
+times_B$parameter <- factor(times_B$parameter, levels = c("ABCDE", "DE","ABC", "AB"))
 
-scale <- 1
-pdf("~/Ne_MSC_write/manuscript/figs/divergence_time_1.pdf", width = 8 * scale, height = 10 * scale)
-tau_b/tau_u & theme(plot.margin = margin(0, 0, -20, 0, "pt"))
-dev.off()
+times_U <- results_cov[tree_row_U, ]
+times_U$parameter <- factor(times_U$parameter, levels = c("ABCDE", "ABCD", "ABC", "AB"))
 
-tau_b <- ggplot(times_B[samples_8_b, ], aes(x = interaction(Ne, demography), y = mean, fill = parameter)) + 
-  geom_hline(data = times_B[samples_8_b, ], aes(yintercept = true, color = parameter), linetype = "dashed", ) +
-  geom_violin(position=position_dodge(width = 0.0)) + #, alpha = .6
-  facet_grid(loci_theta~analysis, scales = "free", labeller = label_parsed, space = "free_x") + 
-  scale_x_discrete(labels = demo_labels ) +  
-  theme_bw() +
-  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) + 
-  labs(fill = "balanced\ntree node", x = "", y = "divergence time", color = "balanced\ntree node") + 
-  theme(axis.text.x = element_blank(), axis.ticks.x = element_blank(), 
-        plot.margin = margin(b = 3, t = 5, l = 5, r = 5), 
-        plot.tag = element_text(face = "bold")) + 
-  labs(tag = "a")  
 
-tau_u <- ggplot(times_U[samples_8_u, ], aes(x = interaction(Ne, demography), y = mean, fill = parameter)) + 
-  geom_hline(data = times_U[samples_8_u, ], aes(yintercept = true, color = parameter), linetype = "dashed", ) +
-  geom_violin(position=position_dodge(width = 0.0)) + #, alpha = .6
-  facet_grid(loci_theta~analysis, scales = "free", labeller = label_parsed, space = "free_x") + 
-  scale_x_discrete(labels = demo_labels ) +  
-  theme_bw() +
-  labs(fill = "unbalanced\ntree node", x = "", y = "divergence time", color = "unbalanced\ntree node") +
-  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1, size = 7.5),
-        strip.text.x = element_blank(),       # Removes the text inside the top facet bars
-        strip.background.x = element_blank(),   # Optional: Removes the gray background boxes
-        plot.tag = element_text(face = "bold")
-  ) +   labs(tag = "b")
+times_U$loci_theta <- factor(times_U$loci_theta,
+                             labels=c(expression(atop(paste(loci," = ", 40,),  paste( theta, " = 0.0025"))),
+                                      expression(atop(paste(loci," = ", 160,), paste( theta, " = 0.0025"))),
+                                      expression(atop(paste(loci," = ", 40,),  paste( theta, " = 0.01"))),
+                                      expression(atop(paste(loci," = ", 160,), paste( theta, " = 0.01")))
+                             ))
+times_B$loci_theta <- factor(times_B$loci_theta,
+                             labels=c(expression(atop(paste(loci," = ", 40,),  paste( theta, " = 0.0025"))),
+                                      expression(atop(paste(loci," = ", 160,), paste( theta, " = 0.0025"))),
+                                      expression(atop(paste(loci," = ", 40,),  paste( theta, " = 0.01"))),
+                                      expression(atop(paste(loci," = ", 160,), paste( theta, " = 0.01")))
+                             ))
 
-scale <- 1
-pdf("~/Ne_MSC_write/manuscript/figs/divergence_time_8.pdf", width = 6 * scale, height = 10 * scale)
-tau_b/tau_u & theme(plot.margin = margin(0, 0, -20, 0, "pt"))
-dev.off()
 
-times_U_cov <- times_U[-which(times_U$analysis == "baseml"), ]
-times_U_cov <- times_U_cov %>%
+times_U_cov <- times_U %>%
   mutate(analysis_samples= interaction(analysis, samples, sep = "_")) 
 times_U_cov$analysis_samples<- factor(times_U_cov$analysis_samples,
-                                  labels=c(expression(atop("bpp",   "1 sample")),
-                                           expression(atop("bpp ghost", "1 sample")),
-                                           expression(atop("bpp",   "8 samples")),
-                                           expression(atop("bpp ghost", "8 samples"))
-                                  ))
+                                      labels=c(expression(atop("bpp",   "1 sample")),
+                                               expression(atop("bpp ghost", "1 sample")),
+                                               expression(atop("bpp",   "8 samples")),
+                                               expression(atop("bpp ghost", "8 samples"))
+                                      ))
 
-times_B_cov <- times_B[-which(times_B$analysis == "baseml"), ]
-times_B_cov <- times_B_cov %>%
+
+times_B_cov <- times_B %>%
   mutate(analysis_samples= interaction(analysis, samples, sep = "_")) 
 times_B_cov$analysis_samples<- factor(times_B_cov$analysis_samples,
                                       labels=c(expression(atop("bpp",   "1 sample")),
@@ -299,9 +271,7 @@ cov_b <- ggplot(times_B_cov, aes(x = interaction(Ne, demography), y = coverage, 
     labels =  c("ABCDE", "ABC", "AB", "DE")
   ) +
   labs(tag = "a")  
-# 
-
-
+ 
 
 cov_u <- ggplot(times_U_cov, aes(x = interaction(Ne, demography), y = coverage, fill = parameter)) + 
   geom_bar(stat = "summary", fun = "mean", position = position_dodge()) + #, alpha = .6
@@ -324,17 +294,15 @@ pdf("~/Ne_MSC_write/manuscript/figs/bpp_ghost_cov_both.pdf", width = 9, height =
 cov_b/cov_u & theme(plot.margin = margin(0, 0, -20, 0, "pt"))
 dev.off()
 
-
+# Extra plots
 ggplot(times_B_cov, aes(x = interaction(Ne, demography), y = CI_size, fill = parameter)) + 
-  #geom_hline(data = times_B, aes(yintercept = true, color = parameter), linetype = "dashed", ) +
-  geom_violin() + #, alpha = .6
+  geom_violin() + 
   facet_grid(loci_theta~analysis, scales = "free", labeller = label_parsed, space = "free_x") + 
   scale_x_discrete(labels = demo_labels ) +  
   theme_bw() +
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) + 
   labs(fill = "balanced\ntree node", x = "", y = "divergence time") + 
   theme(axis.text.x = element_blank(), axis.ticks.x = element_blank(), 
-        #  plot.margin = margin(b = 3, t = 5, l = 5, r = 5), 
         plot.tag = element_text(face = "bold")) + 
   labs(tag = "a")  
 
@@ -357,6 +325,139 @@ ggplot(times_U_cov[ex,], aes(x = rep, y = mean)) +
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) + 
   labs(fill = "balanced\ntree node", x = "", y = "divergence time") + 
   theme(axis.text.x = element_blank(), axis.ticks.x = element_blank(), 
-        #  plot.margin = margin(b = 3, t = 5, l = 5, r = 5), 
         plot.tag = element_text(face = "bold")) + 
   labs(tag = "a")  
+
+#####
+
+results_comb$analysis[which(results_comb$analysis=="ghost")] <- 'bpp ghost'
+
+results_comb <- results_comb %>%
+  mutate(loci_theta= interaction(loci, theta, sep = "_"))
+
+results_comb$loci_theta[which(results_comb$loci_theta == "20000_0.0025")] <- "40_0.0025"
+results_comb$loci_theta[which(results_comb$loci_theta == "20000_0.01")] <- "40_0.01"
+results_comb$loci_theta[which(results_comb$loci_theta == "80000_0.0025")] <- "160_0.0025"
+results_comb$loci_theta[which(results_comb$loci_theta == "80000_0.01")] <- "160_0.01"
+results_comb$loci_theta <- factor(results_comb$loci_theta)
+
+results_comb$loci_theta <- factor(
+  results_comb$loci_theta,
+  labels = c(
+    "loci = 40<br>sites = 20000<br>&theta; = 0.0025",
+    "loci = 160<br>sites = 80000<br>&theta; = 0.0025",
+    "loci = 40<br>sites = 20000<br>&theta; = 0.01",
+    "loci = 160<br>sites = 80000<br>&theta; = 0.01"
+  )
+)
+
+# Reorder analyses
+results_comb$analysis <- factor(results_comb$analysis)
+results_comb <- results_comb %>%mutate(analysis = fct_relevel(analysis, c("bpp", 'bpp ghost', "PICL", "baseml")))
+
+tree_row_B <- grep("B", results_comb$topology)
+tree_row_U <- grep("U", results_comb$topology)
+
+times_B <- results_comb[tree_row_B, ]
+times_B$parameter <- factor(times_B$parameter, levels = c("ABCDE", "DE","ABC", "AB"))
+
+times_U <- results_comb[tree_row_U, ]
+times_U$parameter <- factor(times_U$parameter, levels = c("ABCDE", "ABCD", "ABC", "AB"))
+
+
+samples_1_b <- which(times_B$samples == 1)
+samples_1_u <- which(times_U$samples == 1)
+samples_8_b <- which(times_B$samples == 8)
+samples_8_u <- which(times_U$samples == 8)
+
+
+tau_b <- ggplot(times_B[samples_1_b, ], aes(x = interaction(Ne, demography), y = mean, fill = parameter)) + 
+  geom_hline(data = times_B, aes(yintercept = true, color = parameter), linetype = "dashed", ) +
+  geom_violin(position=position_dodge(width = 0.0)) + #, alpha = .6
+  facet_grid(loci_theta~analysis, scales = "free", space = "free_x") + 
+  scale_x_discrete(labels = demo_labels ) +  
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1), 
+        strip.text.y = ggtext::element_markdown(
+         # size = 10,
+          angle = 270,
+          lineheight = 1.1
+        ), 
+       ) + 
+  labs(fill = "balanced\ntree node", x = "", y = "divergence time", color = "balanced\ntree node") + 
+  theme(axis.text.x = element_blank(), axis.ticks.x = element_blank(), 
+        #  plot.margin = margin(b = 3, t = 5, l = 5, r = 5), 
+          plot.tag = element_text(face = "bold")) + 
+  labs(tag = "a")  
+
+tau_u <- ggplot(times_U[samples_1_u, ], aes(x = interaction(Ne, demography), y = mean, fill = parameter)) + 
+  geom_hline(data = times_U, aes(yintercept = true, color = parameter), linetype = "dashed", ) +
+  geom_violin(position=position_dodge(width = 0.0)) + #, alpha = .6
+  facet_grid(loci_theta~analysis, scales = "free", space = "free_x") + 
+  scale_x_discrete(labels = demo_labels ) +  
+  theme_bw() +
+  labs(fill = "unbalanced\ntree node", x = "", y = "divergence time", color = "unbalanced\ntree node") +  
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1, size = 7.5),
+        strip.text.x = element_blank(),       # Removes the text inside the top facet bars
+        strip.background.x = element_blank(),   # Optional: Removes the gray background boxes
+        plot.tag = element_text(face = "bold"), 
+        strip.text.y = ggtext::element_markdown(
+          # size = 10,
+          angle = 270,
+          lineheight = 1.1
+        ), 
+  ) +   labs(tag = "b") 
+ 
+p <- tau_b/tau_u & theme(plot.margin = margin(0, 0, -20, 0, "pt"))
+ggsave(
+  "~/Ne_MSC_write/manuscript/figs/divergence_time_1.pdf",
+  plot = p,
+  device = cairo_pdf,
+  width = 8,
+  height = 10
+)
+
+tau_b <- ggplot(times_B[samples_8_b, ], aes(x = interaction(Ne, demography), y = mean, fill = parameter)) + 
+  geom_hline(data = times_B[samples_8_b, ], aes(yintercept = true, color = parameter), linetype = "dashed", ) +
+  geom_violin(position=position_dodge(width = 0.0)) + #, alpha = .6
+  facet_grid(loci_theta~analysis, scales = "free", space = "free_x") + 
+  scale_x_discrete(labels = demo_labels ) +  
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) + 
+  labs(fill = "balanced\ntree node", x = "", y = "divergence time", color = "balanced\ntree node") + 
+  theme(axis.text.x = element_blank(), axis.ticks.x = element_blank(), 
+        plot.margin = margin(b = 3, t = 5, l = 5, r = 5), 
+        plot.tag = element_text(face = "bold"), 
+        strip.text.y = ggtext::element_markdown(
+          # size = 10,
+          angle = 270,
+          lineheight = 1.1
+        )) + 
+  labs(tag = "a")  
+
+tau_u <- ggplot(times_U[samples_8_u, ], aes(x = interaction(Ne, demography), y = mean, fill = parameter)) + 
+  geom_hline(data = times_U[samples_8_u, ], aes(yintercept = true, color = parameter), linetype = "dashed", ) +
+  geom_violin(position=position_dodge(width = 0.0)) + #, alpha = .6
+  facet_grid(loci_theta~analysis, scales = "free", space = "free_x") + 
+  scale_x_discrete(labels = demo_labels ) +  
+  theme_bw() +
+  labs(fill = "unbalanced\ntree node", x = "", y = "divergence time", color = "unbalanced\ntree node") +
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1, size = 7.5),
+        strip.text.x = element_blank(),       # Removes the text inside the top facet bars
+        strip.background.x = element_blank(),   # Optional: Removes the gray background boxes
+        plot.tag = element_text(face = "bold"), 
+        strip.text.y = ggtext::element_markdown(
+          # size = 10,
+          angle = 270,
+          lineheight = 1.1
+        )
+  ) +   labs(tag = "b")
+
+p <- tau_b/tau_u & theme(plot.margin = margin(0, 0, -20, 0, "pt"))
+ggsave(
+  "~/Ne_MSC_write/manuscript/figs/divergence_time_8.pdf",
+  plot = p,
+  device = cairo_pdf,
+  width =7.5,
+  height = 10
+)
