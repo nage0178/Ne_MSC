@@ -16,11 +16,14 @@ results = results_original%>%
 results$analysis[which(results$analysis == "astral.tre")] <- "ASTRAL"
 results$analysis[which(results$analysis == "mpest_best.tre")] <- "MP-EST"
 results$analysis[which(results$analysis == "picl_bestLike.tre")] <- "PICL"
+#results$analysis[which(results$analysis == "PICL_est")] <- "PICL_theta"
 results$analysis[which(results$analysis == "MAP.txt")] <- "bpp"
 results_SNP <- results[which(results$analysis == "PICL"), ]
 #results <- results[-which(results$analysis == "PICL"), ]
 results$loci[intersect(which(results$analysis == "PICL"), which(results$loci == 20000))] <- 40
 results$loci[intersect(which(results$analysis == "PICL"), which(results$loci == 80000))] <- 160
+results$loci[intersect(which(results$analysis == "PICL_est"), which(results$loci == 20000))] <- 40
+results$loci[intersect(which(results$analysis == "PICL_est"), which(results$loci == 80000))] <- 160
 results$loci <- factor(results$loci)
 
 
@@ -144,6 +147,17 @@ results_interact_8$loci_theta <- factor(
   )
 )
 
+results_interact_8$analysis <- factor(
+  results_interact_8$analysis,
+  labels = c(
+    "bpp",
+    "ASTRAL",
+    #"MP-EST",
+    "PICL", 
+    "PICL est. &theta;"
+  )
+)
+
 unbalanced <- which(results_interact_8$topology == "unbalanced")
 balanced <- which(results_interact_8$topology == "balanced")
 
@@ -166,6 +180,11 @@ p1 <- ggplot(results_interact_8[balanced, ], aes(x = interaction(Ne, demography)
             strip.text.y = ggtext::element_markdown(
               # size = 10,
               angle = 270,
+              lineheight = 1.1
+            ),
+            strip.text.x = ggtext::element_markdown(
+              # size = 10,
+              #angle = 270,
               lineheight = 1.1
             )) + 
   labs(tag = "a") + geom_errorbar(aes(x = interaction(Ne, demography), ymax = pp_mean, ymin = pp_mean))
@@ -210,6 +229,6 @@ ggsave(
   "~/Ne_MSC_write/manuscript/figs/topology_8.pdf",
   plot = p_both,
   device = cairo_pdf,
-  width = 6,
+  width = 8,
   height = 9
 )

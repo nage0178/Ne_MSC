@@ -11,6 +11,9 @@ gtree$topology[which(gtree$topology == "t_B")] <- "balanced"
 gtree$topology[which(gtree$topology == "t_U")] <- "unbalanced"
 gtree$experiment[which(gtree$experiment == "time")] <- "divergence time"
 
+gtree <- gtree %>%mutate(experiment = fct_relevel(experiment, c("topology", "divergence time")))
+
+
 # Removing extra simulations for constant population size (you ran twice as many as you needed)
 extra_const <- intersect(which(gtree$demography == "s1"), which(gtree$Ne == "Ne_d"))
 gtree_sub <- gtree[-extra_const, ]
