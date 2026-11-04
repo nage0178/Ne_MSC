@@ -33,8 +33,8 @@ get_CI <- function(dir) {
 	return (CI)
 }
 
-dir <- c("lists/dirListTime", "lists/dirListTimeSNP")
-output <- c("picl_times.csv", "picl_timesSNP.csv")
+dir <- c("lists/dirListTimeSNP", "lists/dirListTimeSNP_estTheta")
+output <- c("picl_timesSNP.csv", "picl_timesSNP_estTheta.csv")
 
 for (i in 1:2) {
   rep <- 50
