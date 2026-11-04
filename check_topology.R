@@ -10,7 +10,11 @@ not_converged <- read.table("bpp_files/notTopologyConverged.csv", header = FALSE
 simulations <- unlist(apply(input_trees, 1, strsplit, split = "/"))
 # Bpp has two additional directories in the path which we don't need to keep
 rm_bpp1 <- union(which(simulations == "bpp"), which(simulations == "1"))
-simulations <- matrix(simulations[-rm_bpp1], nrow = nrow(input_trees), byrow =TRUE)
+rm_SNP <- which(simulations == "SNP")
+simulations[which(simulations == "PICL_est_theta") + 1] <- "PICL_est"
+rm_picl <- union(which(simulations == "picl_model1"), which(simulations == "PICL_est_theta"))
+
+simulations <- matrix(simulations[-c(rm_bpp1,rm_SNP, rm_picl)], nrow = nrow(input_trees), byrow =TRUE)
 
 colnames(simulations) <-  c("experiment", "topology", "demography", "loci_samples", "theta", "Ne", "rep", "analysis")
 simulations <- as.data.frame(simulations)
@@ -21,7 +25,7 @@ simulations$rep     <- unlist(lapply(simulations$rep, substr, start = 4, stop = 
 
 # Extract the number of loci and the number of samples
 loci_samples <- matrix(unlist(lapply(simulations$loci_samples, strsplit, split = "_")), nrow = nrow(input_trees), byrow = TRUE)
-simulations$loci    <- unlist(lapply(loci_samples[,1], substr, start = 2, stop = 5))
+simulations$loci    <- unlist(lapply(loci_samples[,1], substring, first = 2))
 simulations$samples <- unlist(lapply(loci_samples[,2], substr, start = 2, stop = 5))
 
 input_trees <- input_trees[, 1]
