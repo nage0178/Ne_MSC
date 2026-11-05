@@ -36,4 +36,5 @@ if [ ! -s $dir/combined.fa   ] ; then
 	eval paste  $dir/fasta/part_*.txt | sed 's/\t//g' | sed -E 's/(.)>.*/\1/g'  > $dir/combined.fa
 fi
 
-rm $dir/fasta/l*_sort.fa
+rm -rf $dir/fasta/
+rm -rf $dir/trees/
