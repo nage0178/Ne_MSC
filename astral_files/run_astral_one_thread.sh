@@ -23,9 +23,10 @@ do
 			map=8
 		fi 
 
-		if [ ! -f "astral.tre" ] ; then
+		if [ ! -s "$dir/astral.tre" ] ; then
 			astral4 -R -o $dir/astral.tre -i $dir/raxml/all_raxml.tre --seed $seed --root O -a astral_files/astral_map_${map}.txt -c $tree &> $dir/outAstral 
 		fi
+
 done
 wait
 
