@@ -40,10 +40,6 @@ do
 	do
 		for dir in time/{t_U,t_B}/$demo/l{40,160}_s{1,8}/theta{0.01,0.0025}/${Ne}/rep{1..50}/bpp/ghost_{1,2}
 		do
-			# Skip exta datasets, bpp wasn't run on them
-			if [[ "$demo" == s1 && "$Ne" == Ne_d ]] ; then
-				continue
-			fi 
 
 			if [ -f $dir/out.FigTree.tre ] ; then	
 
