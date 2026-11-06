@@ -12,7 +12,7 @@ do
 
 			# Get the ess values, record to their own file
 			# Print error messages to separate file
-			./extract_summary_bpp_time.sh $dir/outBpp > $dir/time_sum.txt 
+			./bpp_files/extract_summary_bpp_time.sh $dir/outBpp > $dir/time_sum.txt 
 		done
 
 	done
