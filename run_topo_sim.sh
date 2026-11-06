@@ -3,11 +3,15 @@ mkdir -p {time,topology}/{t_U,t_B}/{s1,s2,s3}/l{40,160}_s{1,8}/theta{0.01,0.0025
 source venv/bin/activate
 
 seed=1
+# Note that s1 with size d are not used in the final manuscript. 
+# These should have the same distributions as s1 with size i, which corresponds to a constant population size model in both cases.
 
+# Simulate gene trees
 for infer in time topology
 do
 	for topology in U B
 	do 
+		# Demographic models
 		for sim_name in s1 s2 s3 
 		do
 			
@@ -17,6 +21,7 @@ do
 				do
 					for theta in 0.01 0.0025
 					do 
+						# Population size larger or smaller than baseline N 
 						for size in i d
 						do
 							for rep in {1..50}
@@ -40,6 +45,7 @@ do
 done
 
 
+# Simulate sequence data
 seq_seed=1
 for loci in 40 160
 do
