@@ -260,6 +260,10 @@ times_B_cov$analysis_samples<- factor(times_B_cov$analysis_samples,
                                                expression(atop("bpp ghost", "8 samples"))
                                       ))
 
+times_B_cov$parameter <- factor(times_B_cov$parameter, levels = c("ABCDE", "DE","ABC", "AB"))
+
+times_U_cov$parameter <- factor(times_U_cov$parameter, levels = c("ABCDE", "ABCD", "ABC", "AB"))
+
 cov_b <- ggplot(times_B_cov, aes(x = interaction(Ne, demography), y = coverage, fill = parameter)) + 
   geom_bar(stat = "summary", fun = "mean", position = position_dodge()) + #, alpha = .6
   facet_grid(loci_theta~analysis_samples, scales = "free", labeller = label_parsed, space = "free_x") +
@@ -286,15 +290,15 @@ cov_u <- ggplot(times_U_cov, aes(x = interaction(Ne, demography), y = coverage, 
   labs(fill = "unbalanced\ntree node", x = "", y = "divergence time coverage") + 
   scale_fill_discrete(
     labels =  c("ABCDE", "ABCD", "ABC", "AB")
-  ) +
-  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1, size = 7.5),
+  ) +   
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.4, hjust = -0,  size = 7.5),
         strip.text.x = element_blank(),       # Removes the text inside the top facet bars
         strip.background.x = element_blank(),   # Optional: Removes the gray background boxes
         plot.tag = element_text(face = "bold"), 
   ) +   labs(tag = "b") 
 
 pdf("~/Ne_MSC_write/manuscript/figs/bpp_ghost_cov_both.pdf", width = 9, height = 8)
-cov_b/cov_u & theme(plot.margin = margin(0, 0, -20, 0, "pt"))
+cov_b/cov_u & theme(plot.margin = margin(0, 0, -10, 0, "pt"))
 dev.off()
 
 #####
@@ -363,7 +367,7 @@ tau_u <- ggplot(times_U[samples_1_u, ], aes(x = interaction(Ne, demography), y =
   scale_x_discrete(labels = demo_labels ) +  
   theme_bw() +
   labs(fill = "unbalanced\ntree node", x = "", y = "divergence time", color = "unbalanced\ntree node") +  
-  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1, size = 7.5),
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.4, hjust =0,  size = 7.5),
         strip.text.x = element_blank(),       # Removes the text inside the top facet bars
         strip.background.x = element_blank(),   # Optional: Removes the gray background boxes
         plot.tag = element_text(face = "bold"), 
@@ -373,7 +377,7 @@ tau_u <- ggplot(times_U[samples_1_u, ], aes(x = interaction(Ne, demography), y =
         ), 
   ) +   labs(tag = "b") 
  
-p <- tau_b/tau_u & theme(plot.margin = margin(0, 0, -20, 0, "pt"))
+p <- tau_b/tau_u & theme(plot.margin = margin(0, 0, -10, 0, "pt"))
 ggsave(
   "~/Ne_MSC_write/manuscript/figs/divergence_time_1.pdf",
   plot = p,
@@ -419,7 +423,8 @@ tau_u <- ggplot(times_U[samples_8_u, ], aes(x = interaction(Ne, demography), y =
   scale_x_discrete(labels = demo_labels ) +  
   theme_bw() +
   labs(fill = "unbalanced\ntree node", x = "", y = "divergence time", color = "unbalanced\ntree node") +
-  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1, size = 7.5),
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.4, hjust = -0,  size = 7.5),
+
         strip.text.x = element_blank(),       # Removes the text inside the top facet bars
         strip.background.x = element_blank(),   # Optional: Removes the gray background boxes
         plot.tag = element_text(face = "bold"), 
@@ -429,7 +434,7 @@ tau_u <- ggplot(times_U[samples_8_u, ], aes(x = interaction(Ne, demography), y =
         )
   ) +   labs(tag = "b")
 
-p <- tau_b/tau_u & theme(plot.margin = margin(0, 0, -20, 0, "pt"))
+p <- tau_b/tau_u & theme(plot.margin = margin(0, 0, -10, 0, "pt"))
 ggsave(
   "~/Ne_MSC_write/manuscript/figs/divergence_time_8.pdf",
   plot = p,
@@ -474,7 +479,7 @@ tau_u <- ggplot(times_U[intersect(samples_8_u, bpp_only), ], aes(x = interaction
         )
   ) +   labs(tag = "b")
 
-p <- tau_b/tau_u & theme(plot.margin = margin(0, 0, -20, 0, "pt"))
+p <- tau_b/tau_u & theme(plot.margin = margin(0, 0, -10, 0, "pt"))
 
 
 #####

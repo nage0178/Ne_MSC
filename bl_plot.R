@@ -117,7 +117,8 @@ p1 <- ggplot(results_interact[rows, ], aes(x = interaction(Ne, demography), y = 
   scale_x_discrete(labels = demo_labels ) +  
   theme_bw() +
   theme( legend.box.margin = margin(t = -25, r = 0, b = -10, l = 0) , 
-         legend.position = "bottom", axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1),
+         axis.text.x = element_text(angle = 90, vjust = 0.4, hjust = -0,  size = 7.5), 
+         legend.position = "bottom",
         strip.text.y = ggtext::element_markdown(
           # size = 10,
           angle = 270,
@@ -173,8 +174,9 @@ for (node in names(table(results_interact$node))) {
     scale_x_discrete(labels = demo_labels ) +  
     theme_bw() +
     theme( legend.box.margin = margin(t = -25, r = 0, b = -10, l = 0) , 
-           legend.position = "bottom", axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1),
-           strip.text.y = ggtext::element_markdown(
+           legend.position = "bottom", 
+           axis.text.x = element_text(angle = 90, vjust = 0.4, hjust = -0,  size = 7.5),
+          strip.text.y = ggtext::element_markdown(
              # size = 10,
              angle = 270,
              lineheight = 1.1

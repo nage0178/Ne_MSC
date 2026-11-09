@@ -76,41 +76,6 @@ demo_labels <- c(
 )
 
 ### Coverage 
-cov_b <- ggplot(times_B, aes(x = interaction(Ne, demography), y = coverage, fill = parameter)) + 
-  geom_bar(stat = "summary", fun = "mean", position = position_dodge()) + #, alpha = .6
-  facet_grid(samples~loci_theta, scales = "free", labeller = label_parsed) +
-  geom_hline(yintercept = .95,  linetype = "dashed", ) +
-  scale_x_discrete(
-    labels = demo_labels
-  ) +  theme_bw() +
-  theme(axis.text.x = element_blank(), axis.ticks.x = element_blank(), 
-        plot.tag = element_text(face = "bold")) + 
-  labs(fill = "balanced\ntree node", x = "", y = "divergence time coverage") + 
-  scale_fill_discrete(
-    labels =  c("ABCDE", "ABC", "AB", "DE")
-  ) +
-  labs(tag = "a")  
-
-cov_u <- ggplot(times_U, aes(x = interaction(Ne, demography), y = coverage, fill = parameter)) + 
-  geom_bar(stat = "summary", fun = "mean", position = position_dodge()) + #, alpha = .6
-  facet_grid(samples~loci_theta, scales = "free", labeller = label_parsed) +
-  geom_hline(yintercept = .95,  linetype = "dashed", ) +
-  scale_x_discrete(
-    labels = demo_labels
-  ) +  theme_bw() +
-  labs(fill = "unbalanced\ntree node", x = "", y = "divergence time coverage") + 
-  scale_fill_discrete(
-    labels =  c("ABCDE", "ABCD", "ABC", "AB")
-  ) +
-  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1, size = 7.5),
-        strip.text.x = element_blank(),       # Removes the text inside the top facet bars
-        strip.background.x = element_blank(),   # Optional: Removes the gray background boxes
-        plot.tag = element_text(face = "bold"), 
-  ) +   labs(tag = "b") 
-
-pdf("~/Ne_MSC_write/manuscript/figs/bpp_cov_both.pdf", width = 9, height = 8)
-cov_b/cov_u & theme(plot.margin = margin(0, 0, -20, 0, "pt"))
-dev.off()
 
 theta_row <- grep("theta", results_bpp$parameter)
 theta_B <- results_bpp[intersect(theta_row, tree_row_B), ]
@@ -169,7 +134,8 @@ theta_tip_u <- ggplot(theta_U[tips_U, ], aes(x = interaction(Ne, demography), y 
   scale_x_discrete(
     labels = demo_labels
   ) +  theme_bw() +
-  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1, size = 7.5),
+  theme(
+    axis.text.x = element_text(angle = 90, vjust = 0.4, hjust = -0,  size = 7.5), 
         strip.text.x = element_blank(),       # Removes the text inside the top facet bars
         strip.background.x = element_blank(),   # Optional: Removes the gray background boxes
         plot.tag = element_text(face = "bold"),
@@ -193,7 +159,7 @@ legend1 <- cowplot::get_legend(pLegend)
 
 scale <- .95
 pdf("~/Ne_MSC_write/manuscript/figs/bpp_theta_tip.pdf", width = 9 *scale, height = 10 *scale)
-ggpubr::ggarrange(theta_tip_b/theta_tip_u & theme(plot.margin = margin(0, 0, -20, 0, "pt")), legend1, labels = c(),
+ggpubr::ggarrange(theta_tip_b/theta_tip_u & theme(plot.margin = margin(0, 0, -10, 0, "pt")), legend1, labels = c(),
                   nrow =2, ncol = 1, heights = c(2,  .1))
 dev.off()
 
@@ -235,7 +201,9 @@ theta_int_u <- ggplot(theta_U[internal_U, ], aes(x = interaction(Ne, demography)
   scale_x_discrete(
     labels = demo_labels
   ) +  theme_bw() +
-  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1, size = 7.5),
+  
+  theme(
+    axis.text.x = element_text(angle = 90, vjust = 0.4, hjust = -0,  size = 7.5), 
         strip.text.x = element_blank(),       # Removes the text inside the top facet bars
         strip.background.x = element_blank(),   # Optional: Removes the gray background boxes
         plot.tag = element_text(face = "bold"),
@@ -249,44 +217,3 @@ pdf("~/Ne_MSC_write/manuscript/figs/bpp_theta_int.pdf", width = 9, height = 10)
 theta_int_b/theta_int_u & theme(plot.margin = margin(0, 0, -5, 0, "pt"))
 dev.off()
 
-
-# tau_b <- ggplot(times_B, aes(x = interaction(Ne, demography), y = mean, fill = parameter)) + 
-#   geom_violin(position=position_dodge(width = 0.0)) + #, alpha = .6
-#   facet_grid(theta~interaction(loci,samples), scales = "free", labeller = label_bquote( theta == .(theta))) +
-#   geom_hline(data = times_B, aes(yintercept = true, color = parameter), linetype = "dashed", ) +
-#   scale_x_discrete(
-#     labels = demo_labels
-#   ) +  theme_bw() +
-#   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) + 
-#   labs(fill = "node", x = "", y = "divergence time", color = "node") + 
-#   scale_fill_discrete(
-#     labels = c("ABCDE", "ABC", "AB", "DE")
-#   ) +scale_color_discrete(
-#     labels = c("ABCDE", "ABC", "AB", "DE")
-#   )
-# 
-# 
-# pdf("~/Ne_MSC_write/manuscript/figs/bpp_tau_bal.pdf", width = 9, height = 6)
-# tau_b
-# dev.off()
-# 
-# 
-# tau_u <- ggplot(times_U, aes(x = interaction(Ne, demography), y = mean, fill = parameter)) + 
-#   geom_violin(position=position_dodge(width = 0.0)) + #, alpha = .6
-#   facet_grid(theta~interaction(loci,samples), scales = "free", labeller = label_bquote( theta == .(theta))) +
-#   geom_hline(data = times_U, aes(yintercept = true, color = parameter), linetype = "dashed", ) +
-#   scale_x_discrete(
-#     labels = demo_labels
-#   ) +  theme_bw() +
-#   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) + 
-#   labs(fill = "node", x = "", y = "divergence time", color = "node") + 
-#   scale_fill_discrete(
-#     labels =  c("ABCDE", "ABCD", "ABC", "AB")
-#   ) +
-#   scale_color_discrete(
-#     labels =  c("ABCDE", "ABCD", "ABC", "AB")
-#   )
-# 
-# pdf("~/Ne_MSC_write/manuscript/figs/bpp_tau_unbal.pdf", width = 9, height = 6)
-# tau_u
-# dev.off()

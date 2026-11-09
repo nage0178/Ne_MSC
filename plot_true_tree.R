@@ -14,7 +14,7 @@ scale <- 0.8
 label_size <- .7
 adj_label <- -.1
 line_label <- -.5
-pdf("~/Ne_MSC_write/manuscript/figs/simulation_trees.pdf", width = 6 * scale, height = 1.5 * scale )
+pdf("~/Ne_MSC_write/manuscript/figs/simulation_trees.pdf", width = 6.25 * scale, height = 1.5 * scale )
 par(mfrow = c(1, 4))
 par(mar = c(.5, 3.5, .5, 0.05)) 
 par(mgp = c(3, 0.7, 0)) 

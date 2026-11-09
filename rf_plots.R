@@ -92,7 +92,7 @@ p1 <- ggplot(results_interact_1[balanced, ], aes(x = interaction(Ne, demography)
 p2 <- ggplot(results_interact_1[unbalanced, ], aes(x = interaction(Ne, demography), fill = fct_rev(dist))) + 
   facet_grid(loci_theta~analysis ) +
   geom_bar(position = "fill") +  scale_fill_viridis_d(option = "viridis") + 
-  labs(fill = "RF\ndistance", x = "demography", y = "unbalanced\nproportion of trees") +theme_bw() + 
+  labs(fill = "RF\ndistance", x = "", y = "unbalanced\nproportion of trees") +theme_bw() + 
   scale_x_discrete(
     labels = c(
       "Ne_i.s1" = "constant",
@@ -102,7 +102,7 @@ p2 <- ggplot(results_interact_1[unbalanced, ], aes(x = interaction(Ne, demograph
       "Ne_i.s3" = "piecewise\nlarger"
       
     )
-  ) +   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1,  size = 7.5),
+  ) +   theme(axis.text.x = element_text(angle = 90, vjust = 0.4, hjust = -0,  size = 7.5),
           strip.text.x = element_blank(),       # Removes the text inside the top facet bars
           strip.background.x = element_blank(),   # Optional: Removes the gray background boxes
           legend.position = "none", plot.tag = element_text(face = "bold"), 
@@ -122,7 +122,7 @@ pLegend <- ggplot(results_interact_1[unbalanced, ], aes(x = interaction(Ne, demo
 legend1 <- cowplot::get_legend(pLegend)
 
 scale <- 1
- p_both <- ggpubr::ggarrange(p1/p2 & theme(plot.margin = margin(0, 0, -20, 0, "pt")), legend1, labels = c(),
+ p_both <- ggpubr::ggarrange(p1/p2 & theme(plot.margin = margin(0, 0, -10, 0, "pt")), legend1, labels = c(),
                          nrow =2, ncol = 1, heights = c(2,  .1))
 ggsave(
   "~/Ne_MSC_write/manuscript/figs/topology_1.pdf",
@@ -193,7 +193,7 @@ p1 <- ggplot(results_interact_8[balanced, ], aes(x = interaction(Ne, demography)
 p2 <- ggplot(results_interact_8[unbalanced, ], aes(x = interaction(Ne, demography), fill = fct_rev(dist))) + 
   facet_grid(loci_theta~analysis ) +
   geom_bar(position = "fill") +  scale_fill_viridis_d(option = "viridis") + 
-  labs(fill = "RF\ndistance", x = "demography", y = "unbalanced\nproportion of trees") +theme_bw() + 
+  labs(fill = "RF\ndistance", x = "", y = "unbalanced\nproportion of trees") +theme_bw() + 
   scale_x_discrete(
     labels = c(
       "Ne_i.s1" = "constant",
@@ -203,7 +203,7 @@ p2 <- ggplot(results_interact_8[unbalanced, ], aes(x = interaction(Ne, demograph
       "Ne_i.s3" = "piecewise\nlarger"
       
     )
-  ) +   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1,  size = 7.5),
+  ) +   theme(axis.text.x = element_text(angle = 90, vjust = 0.4, hjust = -0,  size = 7.5),
               strip.text.x = element_blank(),       # Removes the text inside the top facet bars
               strip.background.x = element_blank(),   # Optional: Removes the gray background boxes
               legend.position = "none", plot.tag = element_text(face = "bold"), 
@@ -223,7 +223,7 @@ pLegend <- ggplot(results_interact_8[unbalanced, ], aes(x = interaction(Ne, demo
 legend1 <- cowplot::get_legend(pLegend)
 
 scale <- 1
-p_both <- ggpubr::ggarrange(p1/p2 & theme(plot.margin = margin(0, 0, -20, 0, "pt")), legend1, labels = c(),
+p_both <- ggpubr::ggarrange(p1/p2 & theme(plot.margin = margin(0, 0, -10, 0, "pt")), legend1, labels = c(),
                             nrow =2, ncol = 1, heights = c(2,  .1))
 ggsave(
   "~/Ne_MSC_write/manuscript/figs/topology_8.pdf",
