@@ -260,9 +260,7 @@ times_B_cov$analysis_samples<- factor(times_B_cov$analysis_samples,
                                                expression(atop("bpp ghost", "8 samples"))
                                       ))
 
-times_B_cov$parameter <- factor(times_B_cov$parameter, levels = c("ABCDE", "DE","ABC", "AB"))
 
-times_U_cov$parameter <- factor(times_U_cov$parameter, levels = c("ABCDE", "ABCD", "ABC", "AB"))
 
 cov_b <- ggplot(times_B_cov, aes(x = interaction(Ne, demography), y = coverage, fill = parameter)) + 
   geom_bar(stat = "summary", fun = "mean", position = position_dodge()) + #, alpha = .6
@@ -274,9 +272,6 @@ cov_b <- ggplot(times_B_cov, aes(x = interaction(Ne, demography), y = coverage, 
   theme(axis.text.x = element_blank(), axis.ticks.x = element_blank(), 
         plot.tag = element_text(face = "bold")) + 
   labs(fill = "balanced\ntree node", x = "", y = "divergence time coverage") + 
-  scale_fill_discrete(
-    labels =  c("ABCDE", "ABC", "AB", "DE")
-  ) +
   labs(tag = "a")  
  
 
@@ -288,9 +283,6 @@ cov_u <- ggplot(times_U_cov, aes(x = interaction(Ne, demography), y = coverage, 
     labels = demo_labels
   ) +  theme_bw() +
   labs(fill = "unbalanced\ntree node", x = "", y = "divergence time coverage") + 
-  scale_fill_discrete(
-    labels =  c("ABCDE", "ABCD", "ABC", "AB")
-  ) +   
   theme(axis.text.x = element_text(angle = 90, vjust = 0.4, hjust = -0,  size = 7.5),
         strip.text.x = element_blank(),       # Removes the text inside the top facet bars
         strip.background.x = element_blank(),   # Optional: Removes the gray background boxes
