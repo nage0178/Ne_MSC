@@ -108,6 +108,12 @@ bpp_files/prep_convergence_bpp.sh
 ```
 This produces files with approximate ESS values for each pair of MCMCs and a file that lists analyses where the two MAP trees did not match.
 
+The coverage table for bpp can be reproduced with the following. It first makes a table of all the tree topologies from bpp for a single run. Then these are used to calculate coverage in R. 
+```
+bpp_files/coverage_topology.sh
+Rscript bpp_files/check_coverage.R
+```
+
 ## Divergence Time  and Branch Length Analyses
 Divergence time analyses infer the divergence times or branch lengths.
 
@@ -190,13 +196,14 @@ Rscript rf_plots.R
 
 ### Divergence time and branch length analyses
 The divergence time and branch length analyses are plotted with the commands below. 
+The coverage is also plotted.
 This also plots the bias for the branch lengths.
 ```
 Rscript plot_divergence_combined.R
 Rscript bl_plots.R
 ```
 
-The coverage for divergence time and the thetas for bpp are plotted with: 
+The thetas for bpp are plotted with: 
 ```
 Rscript bpp_time_plot.R
 ```
