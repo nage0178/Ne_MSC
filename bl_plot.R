@@ -48,6 +48,8 @@ df_summary <- results_bl %>%
 results_interact <- results_bl %>%
   mutate(loci_theta= interaction(loci, theta, sep = "_")) 
 
+results_interact <- results_interact %>%mutate(loci_theta = fct_relevel(loci_theta, c("40_0.0025", "160_0.0025", "40_0.01", "160_0.01")))
+
 results_interact$loci_theta <- factor(
   results_interact$loci_theta,
   labels = c(
