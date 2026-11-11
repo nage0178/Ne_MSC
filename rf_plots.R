@@ -86,7 +86,7 @@ p1 <- ggplot(results_interact_1[balanced, ], aes(x = interaction(Ne, demography)
               angle = 270,
               lineheight = 1.1
             )) + 
-  labs(tag = "a") + geom_errorbar(aes(x = interaction(Ne, demography), ymax = pp_mean, ymin = pp_mean))
+  labs(tag = "a") #+ geom_errorbar(aes(x = interaction(Ne, demography), ymax = pp_mean, ymin = pp_mean))
 
 
 p2 <- ggplot(results_interact_1[unbalanced, ], aes(x = interaction(Ne, demography), fill = fct_rev(dist))) + 
@@ -111,8 +111,8 @@ p2 <- ggplot(results_interact_1[unbalanced, ], aes(x = interaction(Ne, demograph
             angle = 270,
             lineheight = 1.1
           )
-) +   labs(tag = "b") + 
-  geom_errorbar(aes(x = interaction(Ne, demography), ymax = pp_mean, ymin = pp_mean))
+) +   labs(tag = "b") #+ 
+  #geom_errorbar(aes(x = interaction(Ne, demography), ymax = pp_mean, ymin = pp_mean))
 
 
 pLegend <- ggplot(results_interact_1[unbalanced, ], aes(x = interaction(Ne, demography), fill = fct_rev(dist))) + 
@@ -187,7 +187,7 @@ p1 <- ggplot(results_interact_8[balanced, ], aes(x = interaction(Ne, demography)
               #angle = 270,
               lineheight = 1.1
             )) + 
-  labs(tag = "a") + geom_errorbar(aes(x = interaction(Ne, demography), ymax = pp_mean, ymin = pp_mean))
+  labs(tag = "a") #+ geom_errorbar(aes(x = interaction(Ne, demography), ymax = pp_mean, ymin = pp_mean))
 
 
 p2 <- ggplot(results_interact_8[unbalanced, ], aes(x = interaction(Ne, demography), fill = fct_rev(dist))) + 
@@ -212,8 +212,8 @@ p2 <- ggplot(results_interact_8[unbalanced, ], aes(x = interaction(Ne, demograph
                 angle = 270,
                 lineheight = 1.1
               )
-  ) +   labs(tag = "b") + 
-  geom_errorbar(aes(x = interaction(Ne, demography), ymax = pp_mean, ymin = pp_mean))
+  ) +   labs(tag = "b") #+ 
+  #geom_errorbar(aes(x = interaction(Ne, demography), ymax = pp_mean, ymin = pp_mean))
 
 
 pLegend <- ggplot(results_interact_8[unbalanced, ], aes(x = interaction(Ne, demography), fill = fct_rev(dist))) + 
