@@ -18,7 +18,7 @@ do
 							continue
 						fi 
 						echo $dir
-						./cov_one.sh $dir  & 
+						./bpp_files/cov_one.sh $dir  & 
 					done
 				done
 				wait 
