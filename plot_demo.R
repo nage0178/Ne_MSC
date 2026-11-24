@@ -1,5 +1,32 @@
 dims <- 6
 
+arrow <- function( dims) {
+  wd <- 8
+  text_size <- 2.75
+  pdf("~/Ne_MSC_write/manuscript/figs/arrow.pdf", height = dims, width = dims *.2)
+  
+  par(mar = c(.1, .1, .1, .1))
+  
+  plot.new()
+  xlim <- 1.05
+  shift <- .1
+  plot.window(xlim = c(-xlim +shift, xlim *.1 +shift), ylim = c(1, 4 *1.1))
+  
+  lines(x = c(0,0), c(1, 4), lwd =wd)
+  lines(x = c(-.05 *2.5,0), c(1.05 *1.2, 1), lwd =wd)
+  lines(x = c(.05 *2.5,0), c(1.05 *1.2, 1), lwd =wd)
+  
+  text(-.4, 2.5 , "time", cex=text_size, srt =90)
+  
+  #text(-.6, 1.25 , "time\npresent", cex=text_size)
+  
+
+  dev.off()
+
+}
+
+arrow(dims)
+
 const <- function( dims) {
   wd <- 8
   text_size <- 2.75
